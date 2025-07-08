@@ -2,9 +2,22 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
 
+def format_currency_compact(value):
+    abs_value = abs(value)
+    if abs_value >= 1_000_000:
+        return f"${value/1_000_000:.1f}M"
+    elif abs_value >= 1_000:
+        return f"${value/1_000:.0f}k"
+    else:
+        return f"${int(value)}"
+
 # Title
 st.set_page_config(page_title="Trading Journal Analytics", layout="wide")
-st.title("Trading Journal Analytics (Interactive)")
+
+# Streamlit-native header with logo and title
+header_col1, header_col2 = st.columns([1, 6])
+with header_col1:
+    st.image("tradalytics_logo.png", width=300)
 
 # Load CSV
 df = pd.read_csv('Free Trading Journal DB 20a776d92d078137a4ccfeaa4b1081bd_all.csv')
@@ -28,6 +41,10 @@ win_pct = (wins / total_trades * 100) if total_trades > 0 else 0
 loss_pct = (losses / total_trades * 100) if total_trades > 0 else 0
 avg_win = df.loc[df['W/L'] == 'W', 'P/L'].mean() if wins > 0 else 0
 avg_loss = df.loc[df['W/L'] == 'L', 'P/L'].mean() if losses > 0 else 0
+
+# Calculate average trades per day
+trades_per_day = df.groupby(df['Date'].dt.date).size()
+avg_trades_per_day = trades_per_day.mean() if not trades_per_day.empty else 0
 
 # Custom CSS for stat blocks (no vw units, just for color/rounded look)
 st.markdown('''
@@ -92,7 +109,7 @@ st.markdown('''
     }
     .winrate-value {
         color: #b0b3c2;
-        font-size: 32px;
+        font-size: 26px;
         font-weight: 600;
         letter-spacing: 1px;
         width: 100%;
@@ -102,7 +119,7 @@ st.markdown('''
     .summary-block-winrate {
         background: #23272e;
         border-radius: 20px;
-        padding: 40px 40px 50px 40px;
+        padding: 40px 40px 40px 40px;
         margin-bottom: 10px;
         display: flex;
         flex-direction: column;
@@ -131,24 +148,51 @@ st.markdown('''
 ''', unsafe_allow_html=True)
 
 # Use Streamlit columns for layout
-col_left, col_winrate, col_right = st.columns([2,1.2,2])
+col_left, col_winrate, col_pnl, col_avg_trades, col_right = st.columns([2,1.2,1.2,1.2,2])
 
 with col_left:
-    st.markdown(f'''<div class="summary-block"><span class="summary-label">WINS</span> <span class="summary-value-win">{wins}</span></div>''', unsafe_allow_html=True)
-    st.markdown(f'''<div class="summary-block"><span class="summary-label">LOSSES</span> <span class="summary-value-loss">{losses}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">WINS</span> <span class="summary-value-win">{wins}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">LOSSES</span> <span class="summary-value-loss">{losses}</span></div>''', unsafe_allow_html=True)
 
 with col_winrate:
     winrate_display = f"{win_pct:.0f}%" if total_trades > 0 else "-"
     st.markdown(f'''
         <div class="summary-block-winrate">
             <span class="winrate-label">WIN RATE</span>
-            <div class="circle-percentage"><span class="winrate-value">{winrate_display}</span></div>
+            <span class="winrate-value">{winrate_display}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col_pnl:
+    total_pnl = df['P/L'].sum()
+    pnl_color = '#3fffa8' if total_pnl >= 0 else '#ff4b5c'
+    formatted_pnl = format_currency_compact(total_pnl)
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">TOTAL P&amp;L</span>
+            <span class="winrate-value" style="color: {pnl_color}; font-size:26px;">{formatted_pnl}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col_avg_trades:
+    if avg_trades_per_day < 3:
+        avg_trades_color = '#3fffa8'  # green
+    elif 3.1 <= avg_trades_per_day <= 4:
+        avg_trades_color = '#90caf9'  # blue
+    elif avg_trades_per_day > 4.1:
+        avg_trades_color = '#ff4b5c'  # red
+    else:
+        avg_trades_color = '#b0b3c2'  # default/gray
+    st.markdown(f'''
+        <div class="summary-block-winrate" style="padding-bottom: 40px;">
+            <span class="winrate-label">AVG TRADES</span>
+            <span class="winrate-value" style="color: {avg_trades_color};">{avg_trades_per_day:.2f}</span>
         </div>
     ''', unsafe_allow_html=True)
 
 with col_right:
-    st.markdown(f'''<div class="summary-block"><span class="summary-label">AVG W</span> <span class="summary-value-neutral">{int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
-    st.markdown(f'''<div class="summary-block"><span class="summary-label">AVG L</span> <span class="summary-value-avg-loss">{int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG W</span> <span class="summary-value-neutral">{int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG L</span> <span class="summary-value-avg-loss">{int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
 
 # --- Wins and Losses by Market (Grouped Bar Chart) ---
 st.subheader("W&L by Market")

@@ -12,7 +12,7 @@ def format_currency_compact(value):
         return f"${int(value)}"
 
 # Title
-st.set_page_config(page_title="Trading Journal Analytics", layout="wide")
+st.set_page_config(page_title="Trading Journal Analytics", layout="wide", page_icon="favicon.png")
 
 # Set Streamlit page background to match dark theme
 st.markdown(

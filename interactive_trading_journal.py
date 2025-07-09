@@ -180,7 +180,7 @@ with col_winrate:
 with col_pnl:
     total_pnl = df['P/L'].sum()
     pnl_color = '#3fffa8' if total_pnl >= 0 else '#ff4b5c'
-    formatted_pnl = format_currency_compact(total_pnl)
+    formatted_pnl = f"${total_pnl:,.0f}"
     st.markdown(f'''
         <div class="summary-block-winrate">
             <span class="winrate-label">TOTAL P&amp;L</span>
@@ -205,8 +205,8 @@ with col_avg_trades:
     ''', unsafe_allow_html=True)
 
 with col_right:
-    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG W</span> <span class="summary-value-neutral">{int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
-    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG L</span> <span class="summary-value-avg-loss">{int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG W</span> <span class="summary-value-neutral">${int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG L</span> <span class="summary-value-avg-loss">${int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
 
 # --- Wins and Losses by Market (Stacked Bar Chart) ---
 st.subheader("W&L by Market")
@@ -242,6 +242,7 @@ fig_bar.update_layout(
     height=500,
     bargap=0.6,  # makes bars thinner
     showlegend=False,
+    hoverlabel=dict(font_size=15),
 )
 fig_bar.update_yaxes(separatethousands=True)
 fig_bar.update_xaxes(showticklabels=True, tickfont=dict(size=14))  # show labels and make them bigger
@@ -259,7 +260,7 @@ fig_market_bar.add_trace(go.Bar(
     x=pnl_by_market_bar['Market'],
     y=pnl_by_market_bar['P/L'],
     marker_color=bar_colors_market,
-    hovertemplate='$%{y:,.2f}<extra></extra>'
+    hovertemplate='$%{y:,.0f}<extra></extra>'
 ))
 fig_market_bar.update_layout(
     xaxis_title='',
@@ -272,9 +273,10 @@ fig_market_bar.update_layout(
     height=600,
     showlegend=False,
     bargap=0.6,  # makes bars thinner
+    hoverlabel=dict(font_size=15),
 )
 fig_market_bar.update_xaxes(showticklabels=True, tickfont=dict(size=14))  # show labels and make them bigger
-fig_market_bar.update_yaxes(tickprefix="$", separatethousands=True, zeroline=True)
+fig_market_bar.update_yaxes(tickprefix="$", separatethousands=True, zeroline=True, tickformat=",.0f")
 st.plotly_chart(fig_market_bar, use_container_width=True)
 
 # --- P&L per Trade (Line Chart) ---
@@ -300,6 +302,7 @@ fig_pnl.update_layout(
     margin=dict(l=40, r=40, t=60, b=40),
     height=500,
     showlegend=False,
+    hoverlabel=dict(font_size=15),
 )
 fig_pnl.update_yaxes(tickprefix="$", separatethousands=True)
 st.plotly_chart(fig_pnl, use_container_width=True)
@@ -326,6 +329,7 @@ fig.update_layout(
     margin=dict(l=40, r=40, t=60, b=40),
     height=500,
     showlegend=False,
+    hoverlabel=dict(font_size=15),
 )
 fig.update_yaxes(tickprefix="$", separatethousands=True)
 st.plotly_chart(fig, use_container_width=True)

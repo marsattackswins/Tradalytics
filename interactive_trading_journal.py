@@ -14,6 +14,18 @@ def format_currency_compact(value):
 # Title
 st.set_page_config(page_title="Trading Journal Analytics", layout="wide")
 
+# Set Streamlit page background to match dark theme
+st.markdown(
+    """
+    <style>
+    body, .stApp {
+        background-color: #181818 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Streamlit-native header with logo and title
 header_col1, header_col2 = st.columns([1, 6])
 with header_col1:
@@ -223,8 +235,8 @@ fig_bar.update_layout(
     xaxis_title='',
     yaxis_title='Number of Trades',
     template='plotly_dark',
-    plot_bgcolor='#23272e',
-    paper_bgcolor='#23272e',
+    plot_bgcolor='#181818',
+    paper_bgcolor='#181818',
     font=dict(color='#e0e0e0'),
     margin=dict(l=40, r=40, t=60, b=40),
     height=500,
@@ -253,8 +265,8 @@ fig_market_bar.update_layout(
     xaxis_title='',
     yaxis_title='P&L',
     template='plotly_dark',
-    plot_bgcolor='#23272e',
-    paper_bgcolor='#23272e',
+    plot_bgcolor='#181818',
+    paper_bgcolor='#181818',
     font=dict(color='#e0e0e0'),
     margin=dict(l=40, r=40, t=60, b=40),
     height=600,
@@ -282,8 +294,8 @@ fig_pnl.update_layout(
     xaxis_title='Trade #',
     yaxis_title='P/L',
     template='plotly_dark',
-    plot_bgcolor='#23272e',
-    paper_bgcolor='#23272e',
+    plot_bgcolor='#181818',
+    paper_bgcolor='#181818',
     font=dict(color='#e0e0e0'),
     margin=dict(l=40, r=40, t=60, b=40),
     height=500,
@@ -308,8 +320,8 @@ fig.update_layout(
     xaxis_title='Trade #',
     yaxis_title='Equity',
     template='plotly_dark',
-    plot_bgcolor='#23272e',
-    paper_bgcolor='#23272e',
+    plot_bgcolor='#181818',
+    paper_bgcolor='#181818',
     font=dict(color='#e0e0e0'),
     margin=dict(l=40, r=40, t=60, b=40),
     height=500,

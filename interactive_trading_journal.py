@@ -73,26 +73,26 @@ st.markdown('''
     }
     .summary-value-win {
         color: #3fffa8;
-        font-size: 26px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 400;
         margin-left: 8px;
     }
     .summary-value-loss {
         color: #ff4b5c;
-        font-size: 26px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 400;
         margin-left: 8px;
     }
     .summary-value-neutral {
         color: #3fffa8;
-        font-size: 26px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 400;
         margin-left: 8px;
     }
     .summary-value-avg-loss {
         color: #ff4b5c;
-        font-size: 26px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 400;
         margin-left: 8px;
     }
     .winrate-label, .winrate-value {
@@ -105,12 +105,13 @@ st.markdown('''
         font-size: 22px;
         font-weight: 500;
         letter-spacing: 1px;
-        margin-bottom: 8px;
+        margin-bottom: 0;
+        margin-top: 0;
     }
     .winrate-value {
         color: #b0b3c2;
-        font-size: 26px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 400;
         letter-spacing: 1px;
         width: 100%;
         text-align: center;
@@ -124,7 +125,7 @@ st.markdown('''
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         font-size: 22px;
         font-family: 'Segoe UI', sans-serif;
         color: #b0b3c2;
@@ -156,10 +157,11 @@ with col_left:
 
 with col_winrate:
     winrate_display = f"{win_pct:.0f}%" if total_trades > 0 else "-"
+    winrate_color = '#3fffa8' if win_pct > 55 else '#ff4b5c'
     st.markdown(f'''
         <div class="summary-block-winrate">
             <span class="winrate-label">WIN RATE</span>
-            <span class="winrate-value">{winrate_display}</span>
+            <span class="winrate-value" style="color: {winrate_color};">{winrate_display}</span>
         </div>
     ''', unsafe_allow_html=True)
 
@@ -170,7 +172,7 @@ with col_pnl:
     st.markdown(f'''
         <div class="summary-block-winrate">
             <span class="winrate-label">TOTAL P&amp;L</span>
-            <span class="winrate-value" style="color: {pnl_color}; font-size:26px;">{formatted_pnl}</span>
+            <span class="winrate-value" style="color: {pnl_color}; font-size:18px;">{formatted_pnl}</span>
         </div>
     ''', unsafe_allow_html=True)
 
@@ -194,7 +196,7 @@ with col_right:
     st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG W</span> <span class="summary-value-neutral">{int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
     st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG L</span> <span class="summary-value-avg-loss">{int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
 
-# --- Wins and Losses by Market (Grouped Bar Chart) ---
+# --- Wins and Losses by Market (Stacked Bar Chart) ---
 st.subheader("W&L by Market")
 market_stats = df.groupby('Market').agg(
     Wins = ('W/L', lambda x: (x == 'W').sum()),
@@ -206,20 +208,18 @@ fig_bar.add_trace(go.Bar(
     x=markets,
     y=market_stats['Wins'],
     name='Wins',
-    marker_color='#90caf9',
-    offsetgroup=0,
+    marker_color='#3CB371',  # medium sea green
     hovertemplate='%{y} wins<extra></extra>'
 ))
 fig_bar.add_trace(go.Bar(
     x=markets,
     y=market_stats['Losses'],
     name='Losses',
-    marker_color='#F4BB44',
-    offsetgroup=1,
+    marker_color='#ff4b5c',  # red
     hovertemplate='%{y} losses<extra></extra>'
 ))
 fig_bar.update_layout(
-    barmode='relative',
+    barmode='stack',
     xaxis_title='',
     yaxis_title='Number of Trades',
     template='plotly_dark',
@@ -228,8 +228,11 @@ fig_bar.update_layout(
     font=dict(color='#e0e0e0'),
     margin=dict(l=40, r=40, t=60, b=40),
     height=500,
+    bargap=0.6,  # makes bars thinner
+    showlegend=False,
 )
 fig_bar.update_yaxes(separatethousands=True)
+fig_bar.update_xaxes(showticklabels=True, tickfont=dict(size=14))  # show labels and make them bigger
 st.plotly_chart(fig_bar, use_container_width=True)
 
 # --- P&L by Market (Positive/Negative Bar Chart) ---
@@ -237,16 +240,14 @@ st.subheader("P&L by Market")
 pnl_by_market_bar = df.groupby('Market')["P/L"].sum().reset_index()
 pnl_by_market_bar = pnl_by_market_bar.sort_values('P/L', ascending=False)
 bar_colors_market = [
-    '#90caf9' if v >= 0 else '#F4BB44' for v in pnl_by_market_bar['P/L']
+    '#3CB371' if v >= 0 else '#ff4b5c' for v in pnl_by_market_bar['P/L']
 ]
 fig_market_bar = go.Figure()
 fig_market_bar.add_trace(go.Bar(
     x=pnl_by_market_bar['Market'],
     y=pnl_by_market_bar['P/L'],
     marker_color=bar_colors_market,
-    text=pnl_by_market_bar['Market'],
-    textposition='outside',
-    hovertemplate='$%{y:,.2f}<extra></extra>',
+    hovertemplate='$%{y:,.2f}<extra></extra>'
 ))
 fig_market_bar.update_layout(
     xaxis_title='',
@@ -258,8 +259,9 @@ fig_market_bar.update_layout(
     margin=dict(l=40, r=40, t=60, b=40),
     height=600,
     showlegend=False,
+    bargap=0.6,  # makes bars thinner
 )
-fig_market_bar.update_xaxes(showticklabels=False)
+fig_market_bar.update_xaxes(showticklabels=True, tickfont=dict(size=14))  # show labels and make them bigger
 fig_market_bar.update_yaxes(tickprefix="$", separatethousands=True, zeroline=True)
 st.plotly_chart(fig_market_bar, use_container_width=True)
 
@@ -271,7 +273,7 @@ fig_pnl.add_trace(go.Scatter(
     y=df['P/L'],
     mode='lines',
     name='P&L per Trade',
-    line=dict(color='#90caf9', width=2),
+    line=dict(color='white', width=2),
     line_shape='spline',
     hovertemplate='<b>Trade #%{x}</b><br>P&L: $%{y:,.0f}<extra></extra>'
 ))
@@ -298,7 +300,7 @@ fig.add_trace(go.Scatter(
     y=df['Equity'],
     mode='lines',
     name='Equity Curve',
-    line=dict(color='#90caf9', width=2),
+    line=dict(color='white', width=2),
     line_shape='spline',
     hovertemplate='<b>Trade #%{x}</b><br>Equity: $%{y:,.0f}<extra></extra>'
 ))

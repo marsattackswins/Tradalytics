@@ -1,0 +1,161 @@
+﻿Date (GMT+1),Market,Direction,Type,Setup,Confluence,Rating,Risk,Leverage,Margin,$ Before,$ After,P/L,W/L,TP/SL
+"Jun 4, 2025 - 9:41 PM",ETHUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$200.00,"$2,000.00","$2,215.00",$215.00,W,Yes
+"Jun 5, 2025 - 1:50 PM",BTCUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$200.00,"$2,436.00","$2,691.00",$255.00,W,Yes
+"Jun 5, 2025 - 1:56 PM",XMRUSDT.P,SHORT,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$200.00,"$2,691.00","$2,816.00",$125.00,W,Yes
+"Jun 5, 2025 - 2:00 AM",ADAUSDT.P,LONG,Scalp,"Fib, PA, RSI",3,🟡 B+ Tier,4:1,25,$150.00,"$2,215.00","$2,274.00",$59.00,W,No
+"Jun 5, 2025 - 6:08 AM",ETHUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$200.00,"$2,274.00","$2,436.00",$162.00,W,Yes
+"Jun 5, 2025 - 10:06 PM",AAVEUSDT.P,LONG,Scalp,PA only,1,🔴 C Tier,4:1,25,$180.00,"$2,816.00","$2,824.00",$9.00,W,No
+"Jun 6, 2025 - 1:30 PM",SOLUSDT.P,LONG,Day trade,"EMA, Fib, PA",3,🟡 B+ Tier,3:1,25,$200.00,"$3,226.00","$3,407.00",$182.00,W,Yes
+"Jun 6, 2025 - 9:32 AM",XMRUSDT.P,LONG,Day trade,"EMA, Fib, PA",3,🟡 B+ Tier,2:1,25,$200.00,"$2,824.00","$3,004.00",$180.00,W,Yes
+"Jun 6, 2025 - 10:21 AM",ETHUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$200.00,"$3,004.00","$3,125.00",$121.00,W,Yes
+"Jun 6, 2025 - 12:28 PM",BNBUSDT.P,LONG,Day trade,"EMA, Fib, S/R",3,🟡 B+ Tier,3:1,25,$250.00,"$3,125.00","$3,226.00",$101.00,W,Yes
+"Jun 7, 2025 - 1:30 PM",TRXUSDT.P,LONG,Swing trade,PA only,1,🔴 C Tier,4:1,25,$300.00,"$3,407.00","$3,235.66",-$171.00,L,No
+"Jun 7, 2025 - 4:51PM",TRXUSDT.P,SHORT,Day trade,"PA, S/R",2,🟠 B Tier,3:1,25,$500.00,"$3,235.66","$3,207.80",-$27.00,L,No
+"Jun 7, 2025 - 7:13 PM",TRXUSDT.P,LONG,Day trade,"PA, S/R",2,🟠 B Tier,3:1,25,$500.00,"$3,207.80","$3,365.67",$157.00,W,Yes
+"Jun 7, 2025 - 9:02 PM",TRXUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$300.00,"$3,366.00","$3,314.00",-$51.65,L,Yes
+"Jun 7, 2025 - 9:57 PM",TRXUSDT.P,LONG,Scalp,"PA, S/R",2,🟠 B Tier,4:1,25,$300.00,"$3,314.02","$3,255.00",-$59.02,L,Yes
+"Jun 7, 2025 - 9:58 PM",XMRUSDT.P,SHORT,Scalp,"PA only, S/R",2,🟠 B Tier,3:1,25,$300.00,"$3,255.00","$3,226.27",-$28.73,L,No
+"Jun 7, 2025 - 11:32 PM",TRXUSDT.P,SHORT,Scalp,PA only,1,🔴 C Tier,3:1,25,$300.00,"$3,226.27","$3,152.49",-$73.78,L,Yes
+"Jun 7, 2025 - 11:40 PM",TRXUSDT.P,LONG,Scalp,PA only,1,🔴 C Tier,4:1,25,$250.00,"$3,152.49","$3,111.39",-$41.00,L,Yes
+"Jun 7, 2025 - 11:55 PM",TRXUSDT.P,SHORT,Day trade,PA only,1,🔴 C Tier,3:1,25,$300.00,"$3,111.39","$2,926.04",-$185.35,L,No
+"Jun 8, 2025 - 1:27 PM",UNIUSDT.P,LONG,Scalp,PA only,1,🔴 C Tier,3:1,25,$200.00,"$2,920.04","$2,908.96",-$11.07,L,No
+"Jun 8, 2025 - 1:32 PM",NEOUSDT.P,LONG,Day trade,"EMA, PA",2,🟠 B Tier,3:1,25,$250.00,"$2,908.96","$2,718.53",-$190.43,L,Yes
+"Jun 8, 2025 - 1:40 PM",UNIUSDT.P,SHORT,Scalp,"EMA, PA, S/R",3,🟡 B+ Tier,4:1,25,$250.00,"$2,718.53","$2,734.35",$15.82,W,No
+"Jun 8, 2025 - 2:40 AM",TRXUSDT.P,LONG,Day trade,PA only,1,🔴 C Tier,2:1,25,$200.00,"$2,926.04","$2,693.30",-$232.74,L,No
+"Jun 8, 2025 - 4:05 PM",XRPUSDT.P,SHORT,Day trade,"PA, S/R",2,🟠 B Tier,3:1,25,$300.00,"$2,734.35","$2,601.42",-$132.94,L,Yes
+"Jun 8, 2025 - 11:17 AM",SOLUSDT.P,SHORT,Day trade,"PA, S/R",2,🟠 B Tier,3:1,25,$300.00,"$2,693.30","$2,908.78",$215.47,W,Yes
+"Jun 8, 2025 - 12:52 PM",XMRUSDT.P,LONG,Scalp,PA only,1,🔴 C Tier,4:1,25,$200.00,"$2,908.78","$2,920.04",$11.26,W,No
+"Jun 9, 2025 - 4:11 AM",XLMUSDT.P,SHORT,Scalp,"EMA, PA",2,🟠 B Tier,2:1,25,$250.00,"$2,750.45","$2,828.24",$77.80,W,Yes
+"Jun 9, 2025 - 4:23 AM",XLMUSDT.P,SHORT,Scalp,"EMA, PA",2,🟠 B Tier,3:1,25,$250.00,"$2,828.24","$2,922.38",$94.14,W,Yes
+"Jun 9, 2025 - 6:10 PM",XMRUSDT.P,SHORT,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$250.00,"$3,102.83","$3,195.70",$92.87,W,Yes
+"Jun 9, 2025 - 6:11 PM",BNBUSDT.P,SHORT,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$500.00,"$3,195.70","$2,894.31",-$301.39,L,No
+"Jun 9, 2025 - 6:12 PM",XMRUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$200.00,"$2,894.31","$2,959.98",$65.67,W,No
+"Jun 9, 2025 - 6:56 PM",TRXUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,3:1,25,$250.00,"$2,959.98","$3,124.67",$164.00,W,Yes
+"Jun 9, 2025 - 9:39 PM",SOLUSDT.P,SHORT,Scalp,"PA, S/R",2,🟠 B Tier,3:1,25,$500.00,"$3,124.67","$3,033.74",-$90.00,L,No
+"Jun 9, 2025 - 10:14 PM",XLMUSDT.P,LONG,Scalp,"EMA, PA",2,🟠 B Tier,3:1,25,$250.00,"$3,033.74","$3,142.13",$108.39,W,Yes
+"Jun 9, 2025 - 11:35 AM",AAVEUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,3:1,25,$300.00,"$2,922.38","$3,102.83",$180.45,W,Yes
+"Jun 9, 2025 - 12:03 AM",NEOUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$300.00,"$2,601.42","$2,750.45",$149.03,W,Yes
+"Jun 10, 2025 - 2:44 PM",UNIUSDT.P,SHORT,Day trade,"PA, RSI, S/R",3,🟡 B+ Tier,2:1,25,$250.00,"$2,934.07","$2,749.83",-$184.25,L,Yes
+"Jun 10, 2025 - 4:48 AM",SHIBUSDT.P,SHORT,Day trade,"EMA, Fib, S/R",3,🟡 B+ Tier,2:1,25,$450.00,"$3,142.13","$3,185.93",$40.61,W,No
+"Jun 10, 2025 - 8:20 PM",XMRUSDT.P,LONG,Day trade,"EMA, Fib, PA, VP",4,🟢 A Tier,3:1,25,$300.00,"$2,749.83","$2,972.33",$222.50,W,Yes
+"Jun 10, 2025 - 8:25 PM",XRPUSDT.P,LONG,Day trade,"EMA, PA, VP",3,🟡 B+ Tier,2:1,25,$200.00,"$2,972.33","$3,073.61",$101.28,W,No
+"Jun 10, 2025 - 8:50 AM",XMRUSDT.P,LONG,Scalp,"EMA, VP",2,🟠 B Tier,2:1,25,$400.00,"$3,185.93","$3,102.74",-$83.00,L,Yes
+"Jun 10, 2025 - 8:50 AM",BTCUSDT.P,LONG,Day trade,"EMA, PA",2,🟠 B Tier,2:1,25,$300.00,"$3,102.74","$2,934.07",-$168.66,L,Yes
+"Jun 11, 2025 - 1: 43 PM",AVAXUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$400.00,"$2,895.98","$3,117.19",$221.21,W,Yes
+"Jun 11, 2025 - 1:25 PM",XLMUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$500.00,"$3,073.61","$2,895.98",-$177.63,L,No
+"Jun 11, 2025 - 3:25 PM",XRPUSDT.P,LONG,Day trade,"EMA, Fib, PA, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$3,117.19","$3,272.51",$155.31,W,Yes
+"Jun 11, 2025 - 4:20 AM",AVAXUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,3:1,25,$400.00,"$3,075.27","$2,909.75",-$165.52,L,No
+"Jun 11, 2025 - 5:31 PM",XMRUSDT.P,LONG,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$500.00,"$3,272.51","$3,075.27",-$197.24,L,No
+"Jun 12, 2025 - 4:21 AM",BTCUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$300.00,"$2,909.75","$2,816.44",-$93.00,L,Yes
+"Jun 12, 2025 - 8:40 PM",NEOUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R, VWAP",5,⚪ S Tier,3:1,25,$800.00,"$2,816.44","$2,200.58",-$615.00,L,No
+"Jun 12, 2025 - 9:47 PM",UNIUSDT.P,SHORT,Day trade,"PA, RSI, S/R",3,🟡 B+ Tier,2:1,25,$500.00,"$2,200.58","$2,514.23",$314.00,W,Yes
+"Jun 13, 2025 - 1:01 AM",BTCUSDT.P,LONG,Scalp,"Fib, RSI, S/R",3,🟡 B+ Tier,3:1,25,$400.00,"$2,514.23","$2,443.15",-$71.00,L,Yes
+"Jun 13, 2025 - 1:10 AM",XRPUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$800.00,"$2,443.15","$2,141.76",-$301.00,L,No
+"Jun 13, 2025 - 1:36 AM",DOTUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$400.00,"$2,141.76","$2,397.70",$256.00,W,Yes
+"Jun 13, 2025 - 1:36 AM",UNIUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,4:1,25,$450.00,"$2,397.70","$3,023.37",$626.00,W,Yes
+"Jun 13, 2025 - 1:36 AM",XLMUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,4:1,25,$450.00,"$3,023.37","$3,683.21",$660.00,W,Yes
+"Jun 13, 2025 - 2:04 AM",XRPUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$300.00,"$3,683.21","$3,851.47",$168.00,W,Yes
+"Jun 13, 2025 - 2:50 AM",SOLUSDT.P,LONG,Scalp,"PA, S/R",2,🟠 B Tier,3:1,25,$200.00,"$3,851.47","$3,793.55",-$58.00,L,Yes
+"Jun 13, 2025 - 2:51 AM",SOLUSDT.P,SHORT,Scalp,"PA, RSI, S/R",3,🟡 B+ Tier,2:1,25,$200.00,"$3,793.55","$3,839.17",$46.00,W,No
+"Jun 13, 2025 - 3:48 AM",BNBUSDT.P,SHORT,Scalp,"EMA, PA, RSI",3,🟡 B+ Tier,2:1,25,$200.00,"$3,839.17","$3,868.42",$29.00,W,No
+"Jun 13, 2025 - 5:35 PM",AVAXUSDT.P,LONG,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$350.00,"$3,821.86","$3,874.49",$53.00,W,Yes
+"Jun 13, 2025 - 7:30 PM",AVAXUSDT.P,LONG,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$350.00,"$3,874.49","$3,808.91",-$67.00,L,Yes
+"Jun 13, 2025 - 9:25 PM",BNBUSDT.P,SHORT,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$300.00,"$3,808.91","$3,750.44",-$58.00,L,Yes
+"Jun 13, 2025 - 11:04 PM",XLMUSDT.P,LONG,Day trade,"EMA, Fib, PA, RSI, S/R",5,⚪ S Tier,2:1,25,$250.00,"$3,750.44","$3,804.42",$54.00,W,No
+"Jun 13, 2025 - 11:55 PM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, RSI, S/R",5,⚪ S Tier,3:1,25,$500.00,"$3,804.42","$3,914.41",$110.00,W,Yes
+"Jun 13, 2025 - 12:55 PM",BNBUSDT.P,SHORT,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$500.00,"$3,868.42","$3,821.86",-$46.00,L,Yes
+"Jun 14, 2025 - 4:30 PM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$400.00,"$3,914.41","$3,720.89",-$194.00,L,Yes
+"Jun 14, 2025 - 5:30 PM",BNBUSDT.P,SHORT,Scalp,"EMA, PA, RSI, S/R",4,🟢 A Tier,2:1,25,$50.00,"$3,720.89","$3,727.89",$7.00,W,No
+"Jun 14, 2025 - 9:05 PM",NEOUSDT.P,LONG,Day trade,"PA, RSI, S/R",3,🟡 B+ Tier,3:1,25,$300.00,"$3,727.89","$3,635.60",-$92.00,L,No
+"Jun 14, 2025 - 10:15 PM",XLMUSDT.P,SHORT,Day trade,"Fib, PA, S/R",3,🟡 B+ Tier,2:1,25,$500.00,"$3,635.60","$3,488.41",-$147.00,L,Yes
+"Jun 14, 2025 - 10:16 PM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, RSI, S/R",5,⚪ S Tier,3:1,25,$500.00,"$3,488.41","$3,710.49",$222.00,W,Yes
+"Jun 14, 2025 - 10:18 PM",LTCUSTD.P,SHORT,Scalp,"PA, RSI, S/R, VP",4,🟢 A Tier,2:1,25,$300.00,"$3,710.49","$3,661.78",-$49.00,L,Yes
+"Jun 14, 2025 - 10:20 PM",AAVEUSDT.P,LONG,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$400.00,"$3,661.78","$3,766.79",$105.00,W,Yes
+"Jun 14, 2025 - 10:21 PM",AAVEUSDT.P,LONG,Scalp,"PA, S/R, VP, VWAP",4,🟢 A Tier,3:1,25,$300.00,"$3,766.79","$3,909.65",$143.00,W,Yes
+"Jun 14, 2025 - 10:24 PM",UNIUSDT.P,LONG,Scalp,"PA, RSI, S/R",3,🟡 B+ Tier,3:1,25,$100.00,"$3,909.65","$3,928.67",$19.00,W,Yes
+"Jun 14, 2025 - 10:30 PM",BNBUSDT.P,LONG,Scalp,PA only,1,🔴 C Tier,2:1,25,$50.00,"$3,928.67","$3,931.83",$3.00,W,No
+"Jun 15, 2025 - 3:42 PM",XLMUSDT.P,LONG,Day trade,"Fib, S/R, VP, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$4,004.04","$4,122.34",$118.00,W,Yes
+"Jun 15, 2025 - 9:07 PM",AVAXUSDT.P,LONG,Day trade,"PA, S/R, VP",3,🟡 B+ Tier,3:1,25,$600.00,"$4,122.34","$3,830.45",-$292.00,L,No
+"Jun 15, 2025 - 9:30 PM",AAVEUSDT.P,SHORT,Scalp,"PA, S/R",2,🟠 B Tier,3:1,25,$750.00,"$3,830.45","$4,137.75",$307.00,W,Yes
+"Jun 15, 2025 - 11:05 PM",SOLUSDT.P,LONG,Scalp,"PA, RSI, S/R, VP",4,🟢 A Tier,2:1,25,$400.00,"$4,137.75","$4,305.00",$167.00,W,Yes
+"Jun 15, 2025 - 12:47 AM",BNBUSDT.P,LONG,Scalp,"EMA, Fib, PA, VP",4,🟢 A Tier,2:1,25,$250.00,"$3,931.83","$4,004.04",$72.00,W,Yes
+"Jun 17, 2025 - 3:52 AM",SOLUSDT.P,LONG,Day trade,"EMA, Fib, S/R, VP, VWAP",5,⚪ S Tier,2:1,25,$500.00,"$4,305.00","$4,517.47",$212.00,W,Yes
+"Jun 18, 2025 - 1:34 AM",UNIUSDT.P,SHORT,Scalp,"PA, S/R",2,🟠 B Tier,2:1,25,$500.00,"$4,517.47","$4,439.60",-$78.00,L,Yes
+"Jun 18, 2025 - 4:30 PM",BTCUSDT.P,LONG,Day trade,"Fib, S/R, VP",3,🟡 B+ Tier,2:1,25,"$1,000.00","$4,439.60","$3,928.00",-$512.00,L,No
+"Jun 19, 2025 - 1:22 PM",XRPUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,2:1,25,$400.00,"$3,954.82","$4,105.28",$150.00,W,Yes
+"Jun 19, 2025 - 1:41 PM",UNIUSDT.P,SHORT,Day trade,"EMA, Fib, PA, VWAP",4,🟢 A Tier,4:1,25,"$1,000.00","$4,105.28","$4,605.65",$500.00,W,Yes
+"Jun 19, 2025 - 3:30 AM",XLMUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,3:1,25,$800.00,"$3,928.00","$3,537.17",-$391.00,L,No
+"Jun 19, 2025 - 3:43 AM",XLMUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R, VWAP",5,⚪ S Tier,3:1,25,$400.00,"$3,537.17","$3,852.64",$315.00,W,Yes
+"Jun 19, 2025 - 12:43 PM",UNIUSDT.P,SHORT,Scalp,"PA, S/R, VP",3,🟡 B+ Tier,4:1,25,$450.00,"$3,852.64","$3,688.27",-$164.00,L,No
+"Jun 19, 2025 - 12:59 PM",AVAXUSDT.P,SHORT,Day trade,"EMA, Fib, PA, VWAP",4,🟢 A Tier,3:1,25,$500.00,"$3,688.27","$3,954.82",$267.00,W,Yes
+"Jun 20, 2025 - 1:43 PM",XMRUSDT.P,SHORT,Scalp,"EMA, PA, VP",3,🟡 B+ Tier,2:1,25,$500.00,"$5,230.36","$5,106.57",-$124.00,L,Yes
+"Jun 20, 2025 - 2:38 PM",DOTUSDT.P,LONG,Scalp,"PA, S/R, VP, VWAP",4,🟢 A Tier,4:1,25,$800.00,"$5,106.57","$4,966.30",-$141.00,L,No
+"Jun 20, 2025 - 3:46 AM",XMRUSDT.P,LONG,Day trade,"EMA, Fib, RSI, S/R, VWAP",5,⚪ S Tier,3:1,25,$600.00,"$4,605.65","$4,751.48",$146.00,W,Yes
+"Jun 20, 2025 - 5:50 AM",LINKUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,2:1,25,$500.00,"$4,751.48","$4,887.92",$136.00,W,Yes
+"Jun 20, 2025 - 5:50 AM",AAVEUSDT.P,SHORT,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,4:1,25,$700.00,"$4,887.92","$5,242.40",$354.00,W,Yes
+"Jun 20, 2025 - 5:52 AM",XLMUSDT.P,SHORT,Day trade,"PA, VP, VWAP",3,🟡 B+ Tier,2:1,25,$400.00,"$5,242.40","$5,381.15",$138.75,W,Yes
+"Jun 20, 2025 - 8:19 AM",AAVEUSDT.P,SHORT,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$400.00,"$5,381.15","$5,230.36",-$151.00,L,Yes
+"Jun 21, 2025 - 3:30 PM",XMRUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,2:1,25,$600.00,"$4,966.30","$5,115.85",$150.00,W,Yes
+"Jun 21, 2025 - 8:15 PM",XMRUSDT.P,SHORT,Scalp,"EMA, S/R, VP, VWAP",4,🟢 A Tier,2:1,25,$250.00,"$5,115.85","$5,173.02",$57.00,W,Yes
+"Jun 21, 2025 - 9:05 PM",XMRUSDT.P,SHORT,Scalp,"Fib, PA, S/R, VP",4,🟢 A Tier,2:1,25,$300.00,"$5,173.02","$5,234.35",$65.00,W,Yes
+"Jun 21, 2025 - 9:50 PM",XMRUSDT.P,SHORT,Scalp,"PA, S/R, VWAP",3,🟡 B+ Tier,2:1,25,$300.00,"$5,234.35","$5,318.14",$84.00,W,Yes
+"Jun 22, 2025 - 1:47 AM",XLMUSDT.P,LONG,Scalp,"Fib, PA, S/R",3,🟡 B+ Tier,2:1,25,$500.00,"$5,341.45","$5,443.84",$102.00,W,Yes
+"Jun 22, 2025 - 2:38 AM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,"$1,000.00","$5,443.84","$4,947.81",-$496.00,L,No
+"Jun 22, 2025 - 2:40 AM",XMRUSDT.P,LONG,Scalp,"PA, S/R, VWAP",3,🟡 B+ Tier,2:1,25,$500.00,"$5,318.14","$5,341.45",$23.00,W,No
+"Jun 22, 2025 - 3:21 AM",UNIUSDT.P,SHORT,Day trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,4:1,25,$900.00,"$4,947.81","$5,471.07",$523.00,W,Yes
+"Jun 22, 2025 - 3:50 PM",SOLUSDT.P,LONG,Day trade,"PA, RSI, S/R, VP",4,🟢 A Tier,3:1,25,$500.00,"$5,631.01","$5,870.12",$239.00,W,Yes
+"Jun 22, 2025 - 5:23 AM",XMRUSDT.P,LONG,Scalp,"PA, S/R, VWAP",3,🟡 B+ Tier,2:1,25,$300.00,"$5,471.07","$5,631.01",$160.00,W,Yes
+"Jun 22, 2025 - 5:48 PM",LINKUSDT.P,SHORT,Day trade,"PA, S/R, VP, VWAP",4,🟢 A Tier,2:1,25,$400.00,"$5,870.12","$5,821.57",-$49.00,L,Yes
+"Jun 22, 2025 - 7:17 PM",UNIUSDT.P,SHORT,Day trade,"EMA, PA, RSI",3,🟡 B+ Tier,3:1,25,$500.00,"$5,821.57","$6,072.02",$250.00,W,Yes
+"Jun 22, 2025 - 8:26 PM",UNIUSDT.P,SHORT,Scalp,"EMA, PA, VWAP",3,🟡 B+ Tier,2:1,25,$500.00,"$6,072.02","$6,174.43",$102.00,W,Yes
+"Jun 22, 2025 - 9:09 PM",BNBUSDT.P,SHORT,Scalp,"EMA, PA, S/R, VWAP",4,🟢 A Tier,2:1,25,$400.00,"$6,174.43","$6,246.44",$72.00,W,Yes
+"Jun 22, 2025 - 11:40 PM",UNIUSDT.P,SHORT,Scalp,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$400.00,"$6,246.44","$5,930.31",-$315.00,L,No
+"Jun 23, 2025 - 6:40 PM",XLMUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,3:1,25,$800.00,"$5,930.31","$6,331.43",$401.00,W,Yes
+"Jun 24, 2025 - 3:15 PM",AAVEUSDT.P,LONG,Scalp,"EMA, PA, VP",3,🟡 B+ Tier,2:1,25,$500.00,"$6,331.43","$6,565.06",$234.00,W,Yes
+"Jun 24, 2025 - 4:46 PM",UNIUSDT.P,LONG,Scalp,"EMA, PA, RSI, VP",4,🟢 A Tier,2:1,25,$100.00,"$6,565.06","$6,580.00",$15.00,W,Yes
+"Jun 24, 2025 - 5:01 PM",DOTUSDT.P,LONG,Scalp,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$400.00,"$6,580.00","$6,613.32",$33.00,W,Yes
+"Jun 25, 2025 - 2:29 PM",XRPUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,2:1,25,$600.00,"$6,613.32","$6,862.78",$249.00,W,Yes
+"Jun 25, 2025 - 10:01 PM",UNIUSDT.P,LONG,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$800.00,"$6,862.78","$7,198.49",$336.00,W,Yes
+"Jun 26, 2025 - 3:53 AM",AAVEUSDT.P,SHORT,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$500.00,"$7,198.49","$7,086.86",-$111.00,L,Yes
+"Jun 26, 2025 - 4:04 AM",AAVEUSDT.P,LONG,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,3:1,25,$600.00,"$7,086.86","$7,490.32",$403.00,W,Yes
+"Jun 26, 2025 - 8:44 PM",UNIUSDT.P,SHORT,Scalp,"EMA, PA, S/R, VP, VWAP",5,⚪ S Tier,2:1,25,$300.00,"$7,490.32","$7,539.91",$50.00,W,Yes
+"Jun 26, 2025 - 10:28 PM",DOTUSDT.P,SHORT,Scalp,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$200.00,"$7,539.91","$7,575.94",$36.00,W,No
+"Jun 26, 2025 - 10:50 PM",UNIUSDT.P,SHORT,Scalp,"EMA, PA, VP",3,🟡 B+ Tier,3:1,25,$400.00,"$7,575.94","$7,472.81",-$103.00,L,No
+"Jun 27, 2025 - 2:35 AM",UNIUSDT.P,LONG,Day trade,"EMA, PA, S/R, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$7,472.81","$7,623.09",$150.00,W,Yes
+"Jun 27, 2025 - 5:35 AM",DOTUSDT.P,SHORT,Day trade,"EMA, PA, S/R, VWAP",4,🟢 A Tier,3:1,25,$600.00,"$7,623.09","$7,503.30",-$120.00,L,Yes
+"Jun 27, 2025 - 5:49 AM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,3:1,25,$600.00,"$7,503.30","$7,764.12",$261.00,W,Yes
+"Jun 27, 2025 - 5:55 PM",AAVEUSDT.P,LONG,Scalp,"EMA, PA, S/R, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$7,764.12","$7,887.28",$123.00,W,Yes
+"Jun 27, 2025 - 10:08 PM",XLMUSDT.P,SHORT,Scalp,"EMA, PA, VP, VWAP",4,🟢 A Tier,2:1,25,$400.00,"$7,887.28","$7,835.32",-$52.00,L,Yes
+"Jun 28, 2025 - 1:29 AM",XRPUSDT.P,LONG,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$500.00,"$7,917.53","$8,018.62",$101.00,W,Yes
+"Jun 28, 2025 - 6:56 PM",UNIUSDT.P,LONG,Scalp,"EMA, PA, VP, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$8,018.62","$8,133.42",$115.00,W,Yes
+"Jun 28, 2025 - 8:20 PM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, VWAP",4,🟢 A Tier,3:1,25,$800.00,"$8,133.42","$8,355.62",$222.00,W,Yes
+"Jun 28, 2025 - 12:58 AM",AAVEUSDT.P,LONG,Scalp,"EMA, PA, VP, VWAP",4,🟢 A Tier,2:1,25,$400.00,"$7,835.32","$7,917.53",$82.00,W,Yes
+"Jun 29, 2025 - 7:32 PM",XRPUSDT.P,LONG,Scalp,"EMA, PA, VP",3,🟡 B+ Tier,3:1,25,$600.00,"$8,363.87","$8,438.88",$75.00,W,No
+"Jun 29, 2025 - 7:47 PM",BTCUSDT.P,LONG,Scalp,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$600.00,"$8,438.88","$8,473.69",$35.00,W,No
+"Jun 29, 2025 - 11:03 PM",DOTUSDT.P,LONG,Day trade,"EMA, PA, S/R, VP, VWAP",5,⚪ S Tier,3:1,25,$800.00,"$8,473.69","$8,801.36",$328.00,W,Yes
+"Jun 29, 2025 - 12:10 AM",XRPUSDT.P,LONG,Scalp,"EMA, PA, S/R, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$8,355.62","$8,363.87",$8.00,W,No
+"Jun 30, 2025 - 4:47 PM",AAVEUSDT.P,LONG,Swing trade,"EMA, PA, S/R, VP",4,🟢 A Tier,3:1,25,"$1,000.00","$8,801.36","$9,366.43",$565.00,W,Yes
+"Jun 30, 2025 - 9:13 PM",AVAXUSDT.P,LONG,Day trade,"EMA, PA, VP, VWAP",4,🟢 A Tier,2:1,25,$800.00,"$9,366.43","$9,649.52",$283.00,W,Yes
+"Jul 1, 2025 - 12:34 AM",BNBUSDT.P,LONG,Scalp,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$500.00,"$9,649.52","$9,601.17",-$48.00,L,Yes
+"Jul 2, 2025 - 4:58 PM",XLMUSDT.P,LONG,Swing trade,"EMA, PA, S/R, VP, VWAP",5,⚪ S Tier,2:1,25,$600.00,"$9,601.17","$10,093.17",$492.00,W,Yes
+"Jul 2, 2025 - 9:00 PM",XRPUSDT.P,LONG,Day trade,"EMA, Fib, PA",3,🟡 B+ Tier,2:1,25,$500.00,"$10,093.17","$10,272.30",$179.00,W,Yes
+"Jul 3, 2025 - 4:28 AM",AAVEUSDT.P,LONG,Scalp,"EMA, PA, S/R",3,🟡 B+ Tier,3:1,25,$300.00,"$10,272.30","$10,285.43",$13.00,W,No
+"Jul 3, 2025 - 7:11 AM",XMRUSDT.P,LONG,Day trade,"EMA, Fib, PA",3,🟡 B+ Tier,2:1,25,$800.00,"$10,285.43","$10,561.00",$276.00,W,Yes
+"Jul 3, 2025 - 2:52 PM",SOLUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$800.00,"$10,561.00","$10,724.00",$163.00,W,Yes
+"Jul 3, 2025 - 7:41 PM",DOTUSDT.P,SHORT,Scalp,"EMA, PA, S/R, VWAP",4,🟢 A Tier,3:1,25,$400.00,"$10,724.00","$10,718.47",-$6.00,L,No
+"Jul 3, 2025 - 8:00 PM",XRPUSDT.P,LONG,Scalp,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$500.00,"$10,718.47","$10,790.03",$72.00,W,Yes
+"Jul 5, 2025 - 12:37 AM",UNIUSDT.P,LONG,Day trade,"EMA, PA, S/R, VP, VWAP",5,⚪ S Tier,3:1,25,$600.00,"$10,790.03","$11,117.88",$328.00,W,Yes
+"Jul 5, 2025 - 11:49 PM",AAVEUSDT.P,LONG,Day trade,"EMA, PA, S/R, VP",4,🟢 A Tier,2:1,25,$600.00,"$11,117.88","$11,478.80",$361.00,W,Yes
+"Jul 6, 2025 - 11:42 AM",XRPUSDT.P,LONG,Swing trade,"EMA, Fib, PA, S/R, VP",5,⚪ S Tier,2:1,25,"$1,000.00","$11,478.80","$11,993.99",$515.00,W,Yes
+"Jul 6, 2025 - 2:34 PM",ETHUSDT.P,LONG,Day trade,"EMA, PA, S/R, VWAP",4,🟢 A Tier,2:1,25,$800.00,"$11,993.99","$12,346.31",$352.00,W,Yes
+"Jul 6, 2025 - 2:52 PM",LINKUSDT.P,LONG,Swing trade,"EMA, Fib, PA, S/R, VWAP",5,⚪ S Tier,2:1,25,$500.00,"$12,346.31","$12,600.52",$254.00,W,No
+"Jul 6, 2025 - 2:55 PM",DOTUSDT.P,LONG,Scalp,"EMA, PA",2,🟠 B Tier,2:1,25,$500.00,"$12,600.52","$12,594.67",-$6.00,L,No
+"Jul 6, 2025 - 9:04 PM",XLMUSDT.P,LONG,Scalp,"EMA, PA, VP",3,🟡 B+ Tier,2:1,25,$500.00,"$12,594.67","$12,669.35",$75.00,W,Yes
+"Jul 6, 2025 - 10:35 PM",DOTUSDT.P,LONG,Scalp,"EMA, PA, S/R, VWAP",4,🟢 A Tier,2:1,25,$500.00,"$12,669.35","$12,828.03",$159.00,W,Yes
+"Jul 8, 2025 - 12:30 AM",UNIUSDT.P,LONG,Day trade,"EMA, PA, S/R",3,🟡 B+ Tier,2:1,25,$500.00,"$12,828.03","$13,079.46",$251.00,W,Yes
+"Jul 8, 2025 - 12:09 PM",AAVEUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R, VWAP",5,⚪ S Tier,2:1,25,$800.00,"$13,079.46","$13,336.28",$257.00,W,Yes
+"Jul 8, 2025 - 3:19 PM",AAVEUSDT.P,SHORT,Day trade,"PA, RSI, S/R",3,🟡 B+ Tier,3:1,25,$400.00,"$13,336.28","$13,450.46",$114.00,W,No
+"Jul 8, 2025 - 4:18 PM",XLMUSDT.P,SHORT,Day trade,"Fib, PA, S/R",3,🟡 B+ Tier,3:1,25,$500.00,"$13,450.46","$13,357.24",-$93.00,L,No
+"Jul 8, 2025 - 6:09  PM",XLMUSDT.P,LONG,Day trade,"EMA, Fib, PA, S/R",4,🟢 A Tier,2:1,25,$500.00,"$13,357.24","$13,599.72",$242.00,W,Yes
+"Jul 8, 2025 - 8:41 PM",UNIUSDT.P,SHORT,Scalp,"PA, S/R, VWAP",3,🟡 B+ Tier,2:1,25,$400.00,"$13,599.72","$13,706.37",$112.00,W,Yes
+"Jul 9, 2025 - 1:55 AM",XLMUSDT.P,SHORT,Scalp,"EMA, PA, S/R",3,🟡 B+ Tier,3:1,25,$400.00,"$13,706.37","$13,529.05",-$182.00,L,Yes

@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objs as go
+import plotly.graph_objects as go
 
 def format_currency_compact(value):
     abs_value = abs(value)

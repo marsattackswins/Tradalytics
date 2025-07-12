@@ -160,12 +160,52 @@ st.markdown('''
     </style>
 ''', unsafe_allow_html=True)
 
-# Use Streamlit columns for layout
+# Calculate streaks for the summary blocks
+def calculate_streaks(series):
+    streaks = []
+    current_streak = 1
+    current_value = series.iloc[0]
+    
+    for value in series.iloc[1:]:
+        if value == current_value:
+            current_streak += 1
+        else:
+            streaks.append((current_value, current_streak))
+            current_streak = 1
+            current_value = value
+    
+    # Add the last streak
+    streaks.append((current_value, current_streak))
+    return streaks
+
+# Calculate win and loss streaks
+win_loss_series = (df['W/L'] == 'W').astype(int)
+streaks = calculate_streaks(win_loss_series)
+
+win_streaks = [length for value, length in streaks if value == 1]
+loss_streaks = [length for value, length in streaks if value == 0]
+
+# Calculate highest streaks
+highest_win_streak = max(win_streaks) if win_streaks else 0
+highest_loss_streak = max(loss_streaks) if loss_streaks else 0
+
+# Calculate highest win and loss
+highest_win = df.loc[df['W/L'] == 'W', 'P/L'].max() if wins > 0 else 0
+highest_loss = df.loc[df['W/L'] == 'L', 'P/L'].min() if losses > 0 else 0
+
+# Calculate best market and best setup for summary blocks
+best_market_row = df.groupby('Market')["P/L"].sum().sort_values(ascending=False).head(1)
+best_market = best_market_row.index[0] if not best_market_row.empty else "-"
+best_setup_row = df.groupby('Setup')["P/L"].sum().sort_values(ascending=False).head(1)
+best_setup = best_setup_row.index[0] if not best_setup_row.empty else "-"
+expectancy = (win_pct * avg_win + loss_pct * avg_loss) / 100 if total_trades > 0 else 0
+
+# Use Streamlit columns for layout - First Row
 col_left, col_winrate, col_pnl, col_avg_trades, col_right = st.columns([2,1.2,1.2,1.2,2])
 
 with col_left:
     st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">WINS</span> <span class="summary-value-win">{wins}</span></div>''', unsafe_allow_html=True)
-    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">LOSSES</span> <span class="summary-value-loss">{losses}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG WIN</span> <span class="summary-value-neutral">${int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
 
 with col_winrate:
     winrate_display = f"{win_pct:.0f}%" if total_trades > 0 else "-"
@@ -197,16 +237,59 @@ with col_avg_trades:
         avg_trades_color = '#ff4b5c'  # red
     else:
         avg_trades_color = '#b0b3c2'  # default/gray
+    
+    # Format to show decimal only when needed
+    avg_trades_display = f"{avg_trades_per_day:.0f}" if avg_trades_per_day.is_integer() else f"{avg_trades_per_day:.1f}"
+    
     st.markdown(f'''
         <div class="summary-block-winrate" style="padding-bottom: 40px;">
             <span class="winrate-label">AVG TRADES</span>
-            <span class="winrate-value" style="color: {avg_trades_color};">{avg_trades_per_day:.2f}</span>
+            <span class="winrate-value" style="color: {avg_trades_color};">{avg_trades_display}</span>
         </div>
     ''', unsafe_allow_html=True)
 
 with col_right:
-    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG W</span> <span class="summary-value-neutral">${int(avg_win) if avg_win else 0}</span></div>''', unsafe_allow_html=True)
-    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG L</span> <span class="summary-value-avg-loss">${int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">LOSSES</span> <span class="summary-value-loss">{losses}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">AVG LOSS</span> <span class="summary-value-avg-loss">${int(avg_loss) if avg_loss else 0}</span></div>''', unsafe_allow_html=True)
+
+# Second Row - Aligned with first row
+col_left2, col_winrate2, col_pnl2, col_avg_trades2, col_right2 = st.columns([2,1.2,1.2,1.2,2])
+
+with col_left2:
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">HIGHEST WIN</span> <span class="summary-value-win">${int(highest_win) if highest_win else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">WIN STREAK</span> <span class="summary-value-win">{highest_win_streak}</span></div>''', unsafe_allow_html=True)
+
+with col_winrate2:
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">BEST MARKET</span>
+            <span class="winrate-value" style="color: #3fffa8;">{best_market}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col_pnl2:
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">BEST SETUP</span>
+            <span class="winrate-value" style="color: #90caf9;">{best_setup}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col_avg_trades2:
+    expectancy_color = '#3fffa8' if expectancy >= 50 else '#ff4b5c'  # green if >= $50, red if < $50
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">EXPECTANCY</span>
+            <span class="winrate-value" style="color: {expectancy_color};">${expectancy:,.2f}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col_right2:
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">HIGHEST LOSS</span> <span class="summary-value-loss">${int(highest_loss) if highest_loss else 0}</span></div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">LOSS STREAK</span> <span class="summary-value-loss">{highest_loss_streak}</span></div>''', unsafe_allow_html=True)
+
+# Add space between summary blocks and charts
+st.markdown("<br><br>", unsafe_allow_html=True)
 
 # --- Wins and Losses by Market (Stacked Bar Chart) ---
 st.subheader("W&L by Market")
@@ -287,8 +370,7 @@ fig_pnl.add_trace(go.Scatter(
     y=df['P/L'],
     mode='lines',
     name='P&L per Trade',
-    line=dict(color='white', width=2),
-    line_shape='spline',
+    line=dict(color='white', width=2, shape='spline', smoothing=1.3),
     hovertemplate='<b>Trade #%{x}</b><br>P&L: $%{y:,.0f}<extra></extra>'
 ))
 fig_pnl.add_shape(type="line", x0=1, x1=len(df['P/L']), y0=0, y1=0, line=dict(color="white", width=1.5, dash="dash"))
@@ -315,8 +397,9 @@ fig.add_trace(go.Scatter(
     y=df['Equity'],
     mode='lines',
     name='Equity Curve',
-    line=dict(color='white', width=2),
-    line_shape='spline',
+    line=dict(color='#90EE90', width=2),  # light green line
+    fill='tonexty',
+    fillcolor='rgba(144, 238, 144, 0.2)',  # more transparent light green fill
     hovertemplate='<b>Trade #%{x}</b><br>Equity: $%{y:,.0f}<extra></extra>'
 ))
 fig.update_layout(
@@ -333,6 +416,133 @@ fig.update_layout(
 )
 fig.update_yaxes(tickprefix="$", separatethousands=True)
 st.plotly_chart(fig, use_container_width=True)
+
+# --- Cumulative Win/Loss Count ---
+st.subheader("Cumulative W&L")
+
+# Calculate cumulative wins and losses
+df['Cumulative Wins'] = (df['W/L'] == 'W').cumsum()
+df['Cumulative Losses'] = (df['W/L'] == 'L').cumsum()
+
+fig_cum = go.Figure()
+fig_cum.add_trace(go.Scatter(
+    x=df['Date'],
+    y=df['Cumulative Wins'],
+    mode='lines',
+    name='Cumulative Wins',
+    line=dict(color='#3fffa8', width=2),
+    line_shape='spline',  # smooth curve
+    hovertemplate='<extra></extra>'
+))
+fig_cum.add_trace(go.Scatter(
+    x=df['Date'],
+    y=df['Cumulative Losses'],
+    mode='lines',
+    name='Cumulative Losses',
+    line=dict(color='#ff4b5c', width=2),
+    line_shape='spline',  # smooth curve
+    hovertemplate='<extra></extra>'
+))
+fig_cum.update_layout(
+    xaxis_title='Date',
+    yaxis_title='Count',
+    template='plotly_dark',
+    plot_bgcolor='#181818',
+    paper_bgcolor='#181818',
+    font=dict(color='#e0e0e0'),
+    margin=dict(l=40, r=40, t=60, b=40),
+    height=500,
+    showlegend=False,  # Hide the legend
+    hoverlabel=dict(font_size=15),
+)
+st.plotly_chart(fig_cum, use_container_width=True)
+
+# --- Drawdown Analysis ---
+st.subheader("Drawdown")
+
+# Calculate running maximum and drawdown
+df['Running Max'] = df['Equity'].expanding().max()
+df['Drawdown'] = df['Equity'] - df['Running Max']
+df['Drawdown %'] = (df['Drawdown'] / df['Running Max']) * 100
+
+# Calculate drawdown statistics
+max_drawdown = df['Drawdown'].min()
+max_drawdown_pct = df['Drawdown %'].min()
+avg_drawdown = df['Drawdown'].mean()
+avg_drawdown_pct = df['Drawdown %'].mean()
+
+# Calculate recovery periods (when drawdown goes from negative to 0)
+recovery_periods = []
+current_drawdown_start = None
+for i, drawdown in enumerate(df['Drawdown']):
+    if drawdown < 0 and current_drawdown_start is None:
+        current_drawdown_start = i
+    elif drawdown >= 0 and current_drawdown_start is not None:
+        recovery_periods.append(i - current_drawdown_start)
+        current_drawdown_start = None
+
+avg_recovery_period = sum(recovery_periods) / len(recovery_periods) if recovery_periods else 0
+
+# Display drawdown statistics
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">MAX DRAWDOWN</span>
+            <span class="winrate-value" style="color: #ff4b5c;">${max_drawdown:,.0f}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">MAX DRAWDOWN %</span>
+            <span class="winrate-value" style="color: #ff4b5c;">{max_drawdown_pct:.1f}%</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">AVG DRAWDOWN</span>
+            <span class="winrate-value" style="color: #ff4b5c;">${avg_drawdown:,.0f}</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f'''
+        <div class="summary-block-winrate">
+            <span class="winrate-label">AVG RECOVERY</span>
+            <span class="winrate-value" style="color: #3fffa8;">{avg_recovery_period:.0f} trades</span>
+        </div>
+    ''', unsafe_allow_html=True)
+
+# Create drawdown line chart
+fig_drawdown = go.Figure()
+fig_drawdown.add_trace(go.Scatter(
+    x=list(range(1, len(df)+1)),
+    y=df['Drawdown %'],
+    mode='lines',
+    name='Drawdown %',
+    line=dict(color='#ff4b5c', width=2, shape='spline', smoothing=1.3),
+    fill='tonexty',
+    fillcolor='rgba(255, 75, 92, 0.3)'
+))
+fig_drawdown.update_layout(
+    xaxis_title='Trade #',
+    yaxis_title='Drawdown %',
+    template='plotly_dark',
+    plot_bgcolor='#181818',
+    paper_bgcolor='#181818',
+    font=dict(color='#e0e0e0'),
+    margin=dict(l=40, r=40, t=60, b=40),
+    height=500,
+    showlegend=False,
+    hoverlabel=dict(font_size=15),
+)
+fig_drawdown.update_yaxes(tickformat=".1f", ticksuffix="%")
+st.plotly_chart(fig_drawdown, use_container_width=True)
 
 # Optionally, show the raw data table
 toggle = st.checkbox("Show raw data table")

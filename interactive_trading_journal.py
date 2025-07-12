@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import base64
-with open("github_icon_b64.txt", "r", encoding="utf-8") as f:
-    github_icon_b64 = ''.join(f.read().split())
 
 def format_currency_compact(value):
     abs_value = abs(value)
@@ -40,28 +37,22 @@ def show_upload_page():
     # Streamlit-native header with logo and title
     header_col1, header_col2, header_col3 = st.columns([1, 6, 1])
     with header_col1:
-        st.image("tradalytics_logo.png", width=200)
-    with header_col3:
-        st.markdown(
-            f'''
-            <a href="https://github.com/marsattackswins/Tradalytics" target="_blank">
-                <img src="data:image/png;base64,{github_icon_b64}" width="30" style="margin-bottom:0px;" />
-            </a>
-            ''',
-            unsafe_allow_html=True
-        )
+        st.image("tradalytics_logo.png")
+    # header_col3 is now unused
     
     # Center the content
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.markdown("## 📊 Welcome to Tradalytics")
+        st.markdown("<div style='margin-bottom: 48px;'></div>", unsafe_allow_html=True)
         st.markdown("Upload your CSV file with trading data to get comprehensive analytics and insights.")
         
         # File upload section
         uploaded_file = st.file_uploader(
-            "Choose a CSV file",
+            "Upload CSV",  # Non-empty label for accessibility
             type=['csv'],
-            help="Upload a CSV file with columns: Date/Time column, Market, Setup, P/L, W/L"
+            help="Upload a CSV file with columns: Date/Time column, Market, Setup, P/L, W/L",
+            label_visibility="collapsed"
         )
         
         # Load CSV based on upload
@@ -95,21 +86,14 @@ def show_analysis_page():
     # Streamlit-native header with logo and title
     header_col1, header_col2, header_col3, header_col4 = st.columns([1, 4, 1, 1])
     with header_col1:
-        st.image("tradalytics_logo.png", width=200)
-    with header_col3:
-        if st.button("⬅️ Upload Different File"):
+        st.image("tradalytics_logo.png")
+    # Remove the upload button from header_col3 and move it to header_col4, rename to 'Upload', and remove any icon
+    with header_col4:
+        if st.button("Upload"):
             st.session_state.data_uploaded = False
             st.session_state.df = None
             st.rerun()
-    with header_col4:
-        st.markdown(
-            f'''
-            <a href="https://github.com/marsattackswins/Tradalytics" target="_blank">
-                <img src="data:image/png;base64,{github_icon_b64}" width="30" style="margin-bottom:0px;" />
-            </a>
-            ''',
-            unsafe_allow_html=True
-        )
+    # header_col3 is now unused
     
     # Clean and preprocess
     # Find date column (flexible detection)
@@ -119,7 +103,11 @@ def show_analysis_page():
     else:
         date_col = 'Date (GMT+1)'  # Fallback to original column name
     
-    df['Date'] = pd.to_datetime(df[date_col].str.replace(' - ', ' ', regex=False), errors='coerce')
+    df['Date'] = pd.to_datetime(
+        df[date_col].str.replace(' - ', ' ', regex=False),
+        errors='coerce',
+        format="%b %d, %Y %I:%M %p"  # Matches 'Jun 12, 2025 - 8:40 PM' after replace
+    )
     df = df.sort_values('Date')
     df['P/L'] = df['P/L'].replace({r'\$':'', ',':''}, regex=True).astype(float)
     df['W/L'] = df['W/L'].str.strip()
@@ -352,19 +340,19 @@ def show_analysis_page():
         ''', unsafe_allow_html=True)
 
     with col_pnl2:
-        st.markdown(f'''
-            <div class="summary-block-winrate">
-                <span class="winrate-label">BEST SETUP</span>
-                <span class="winrate-value" style="color: #90caf9;">{best_setup}</span>
-            </div>
-        ''', unsafe_allow_html=True)
-
-    with col_avg_trades2:
         expectancy_color = '#3fffa8' if expectancy >= 50 else '#ff4b5c'  # green if >= $50, red if < $50
         st.markdown(f'''
             <div class="summary-block-winrate">
                 <span class="winrate-label">EXPECTANCY</span>
                 <span class="winrate-value" style="color: {expectancy_color};">${expectancy:,.2f}</span>
+            </div>
+        ''', unsafe_allow_html=True)
+
+    with col_avg_trades2:
+        st.markdown(f'''
+            <div class="summary-block-winrate">
+                <span class="winrate-label">BEST SETUP</span>
+                <span class="winrate-value" style="color: #90caf9;">{best_setup}</span>
             </div>
         ''', unsafe_allow_html=True)
 
@@ -400,7 +388,7 @@ def show_analysis_page():
     fig_bar.update_layout(
         barmode='stack',
         xaxis_title='',
-        yaxis_title='Number of Trades',
+        yaxis_title='',  # Remove y-axis label
         template='plotly_dark',
         plot_bgcolor='#181818',
         paper_bgcolor='#181818',
@@ -431,7 +419,7 @@ def show_analysis_page():
     ))
     fig_market_bar.update_layout(
         xaxis_title='',
-        yaxis_title='P&L',
+        yaxis_title='',  # Remove y-axis label
         template='plotly_dark',
         plot_bgcolor='#181818',
         paper_bgcolor='#181818',
@@ -459,8 +447,8 @@ def show_analysis_page():
     ))
     fig_pnl.add_shape(type="line", x0=1, x1=len(df['P/L']), y0=0, y1=0, line=dict(color="white", width=1.5, dash="dash"))
     fig_pnl.update_layout(
-        xaxis_title='Trade #',
-        yaxis_title='P/L',
+        xaxis_title='',
+        yaxis_title='',  # Remove y-axis label
         template='plotly_dark',
         plot_bgcolor='#181818',
         paper_bgcolor='#181818',
@@ -487,8 +475,8 @@ def show_analysis_page():
         hovertemplate='<b>Trade #%{x}</b><br>Equity: $%{y:,.0f}<extra></extra>'
     ))
     fig.update_layout(
-        xaxis_title='Trade #',
-        yaxis_title='Equity',
+        xaxis_title='',  # Remove Trade # label
+        yaxis_title='',  # Remove y-axis label
         template='plotly_dark',
         plot_bgcolor='#181818',
         paper_bgcolor='#181818',
@@ -526,8 +514,8 @@ def show_analysis_page():
         hovertemplate='<extra></extra>'
     ))
     fig_cum.update_layout(
-        xaxis_title='Date',
-        yaxis_title='Count',
+        xaxis_title='',
+        yaxis_title='',  # Remove y-axis label
         template='plotly_dark',
         plot_bgcolor='#181818',
         paper_bgcolor='#181818',
@@ -536,6 +524,9 @@ def show_analysis_page():
         height=500,
         showlegend=False,  # Hide the legend
         hoverlabel=dict(font_size=15),
+        xaxis=dict(
+            tickformat='%b %d'  # Show only month and day
+        )
     )
     st.plotly_chart(fig_cum, use_container_width=True)
 
@@ -565,41 +556,6 @@ def show_analysis_page():
 
     avg_recovery_period = sum(recovery_periods) / len(recovery_periods) if recovery_periods else 0
 
-    # Display drawdown statistics
-    col1, col2, col3, col4 = st.columns(4)
-
-    with col1:
-        st.markdown(f'''
-            <div class="summary-block-winrate">
-                <span class="winrate-label">MAX DRAWDOWN</span>
-                <span class="winrate-value" style="color: #ff4b5c;">${max_drawdown:,.0f}</span>
-            </div>
-        ''', unsafe_allow_html=True)
-
-    with col2:
-        st.markdown(f'''
-            <div class="summary-block-winrate">
-                <span class="winrate-label">MAX DRAWDOWN %</span>
-                <span class="winrate-value" style="color: #ff4b5c;">{max_drawdown_pct:.1f}%</span>
-            </div>
-        ''', unsafe_allow_html=True)
-
-    with col3:
-        st.markdown(f'''
-            <div class="summary-block-winrate">
-                <span class="winrate-label">AVG DRAWDOWN</span>
-                <span class="winrate-value" style="color: #ff4b5c;">${avg_drawdown:,.0f}</span>
-            </div>
-        ''', unsafe_allow_html=True)
-
-    with col4:
-        st.markdown(f'''
-            <div class="summary-block-winrate">
-                <span class="winrate-label">AVG RECOVERY</span>
-                <span class="winrate-value" style="color: #3fffa8;">{avg_recovery_period:.0f} trades</span>
-            </div>
-        ''', unsafe_allow_html=True)
-
     # Create drawdown line chart
     fig_drawdown = go.Figure()
     fig_drawdown.add_trace(go.Scatter(
@@ -612,8 +568,8 @@ def show_analysis_page():
         fillcolor='rgba(255, 75, 92, 0.3)'
     ))
     fig_drawdown.update_layout(
-        xaxis_title='Trade #',
-        yaxis_title='Drawdown %',
+        xaxis_title='',  # Remove Trade # label
+        yaxis_title='',  # Remove y-axis label
         template='plotly_dark',
         plot_bgcolor='#181818',
         paper_bgcolor='#181818',
@@ -625,6 +581,37 @@ def show_analysis_page():
     )
     fig_drawdown.update_yaxes(tickformat=".1f", ticksuffix="%")
     st.plotly_chart(fig_drawdown, use_container_width=True)
+
+    # Display drawdown statistics (moved below the chart)
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown(f'''
+            <div class="summary-block-winrate">
+                <span class="winrate-label">MAX DRAWDOWN</span>
+                <span class="winrate-value" style="color: #ff4b5c;">${max_drawdown:,.0f}</span>
+            </div>
+        ''', unsafe_allow_html=True)
+    with col2:
+        st.markdown(f'''
+            <div class="summary-block-winrate">
+                <span class="winrate-label">MAX DRAWDOWN %</span>
+                <span class="winrate-value" style="color: #ff4b5c;">{max_drawdown_pct:.1f}%</span>
+            </div>
+        ''', unsafe_allow_html=True)
+    with col3:
+        st.markdown(f'''
+            <div class="summary-block-winrate">
+                <span class="winrate-label">AVG DRAWDOWN</span>
+                <span class="winrate-value" style="color: #ff4b5c;">${avg_drawdown:,.0f}</span>
+            </div>
+        ''', unsafe_allow_html=True)
+    with col4:
+        st.markdown(f'''
+            <div class="summary-block-winrate">
+                <span class="winrate-label">AVG RECOVERY</span>
+                <span class="winrate-value" style="color: #3fffa8;">{avg_recovery_period:.0f} trades</span>
+            </div>
+        ''', unsafe_allow_html=True)
 
     # Optionally, show the raw data table
     toggle = st.checkbox("Show raw data table")

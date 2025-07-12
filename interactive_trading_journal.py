@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import base64
+with open("github_icon_b64.txt") as f:
+    github_icon_b64 = f.read().strip()
 
 def format_currency_compact(value):
     abs_value = abs(value)
@@ -35,9 +38,18 @@ if 'df' not in st.session_state:
 def show_upload_page():
     """Show the upload page"""
     # Streamlit-native header with logo and title
-    header_col1, header_col2 = st.columns([1, 6])
+    header_col1, header_col2, header_col3 = st.columns([1, 6, 1])
     with header_col1:
         st.image("tradalytics_logo.png", width=200)
+    with header_col3:
+        st.markdown(
+            f'''
+            <a href="https://github.com/marsattackswins/Tradalytics" target="_blank">
+                <img src="data:image/png;base64,{github_icon_b64}" width="30" style="margin-bottom:0px;" />
+            </a>
+            ''',
+            unsafe_allow_html=True
+        )
     
     # Center the content
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -74,14 +86,14 @@ def show_upload_page():
                 st.error(f"❌ Error reading file: {e}")
                 st.info("Please check your CSV format and try again.")
         else:
-            st.info("📊 Upload your CSV file to get started with trading analytics!")
+            pass
 
 def show_analysis_page():
     """Show the analysis page with all charts and metrics"""
     df = st.session_state.df
     
     # Streamlit-native header with logo and title
-    header_col1, header_col2, header_col3 = st.columns([1, 4, 1])
+    header_col1, header_col2, header_col3, header_col4 = st.columns([1, 4, 1, 1])
     with header_col1:
         st.image("tradalytics_logo.png", width=200)
     with header_col3:
@@ -89,6 +101,15 @@ def show_analysis_page():
             st.session_state.data_uploaded = False
             st.session_state.df = None
             st.rerun()
+    with header_col4:
+        st.markdown(
+            f'''
+            <a href="https://github.com/marsattackswins/Tradalytics" target="_blank">
+                <img src="data:image/png;base64,{github_icon_b64}" width="30" style="margin-bottom:0px;" />
+            </a>
+            ''',
+            unsafe_allow_html=True
+        )
     
     # Clean and preprocess
     # Find date column (flexible detection)

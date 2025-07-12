@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import base64
-with open("github_icon_b64.txt") as f:
-    github_icon_b64 = f.read().strip()
+with open("github_icon_b64.txt", "r", encoding="utf-8") as f:
+    github_icon_b64 = ''.join(f.read().split())
 
 def format_currency_compact(value):
     abs_value = abs(value)

@@ -45,7 +45,8 @@ def show_upload_page():
     with col2:
         st.markdown("## 📊 Welcome to Tradalytics")
         st.markdown("<div style='margin-bottom: 48px;'></div>", unsafe_allow_html=True)
-        st.markdown("Upload your CSV file with trading data to get comprehensive analytics and insights.")
+        st.markdown(
+            "Upload your CSV file with trading data to get comprehensive analytics and insights. Required columns: Date/Time, Market, Setup, P/L, W/L.")
         
         # File upload section
         uploaded_file = st.file_uploader(

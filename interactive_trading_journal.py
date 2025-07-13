@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import numpy as np
 
 def format_currency_compact(value):
     abs_value = abs(value)
@@ -105,9 +106,9 @@ def show_analysis_page():
         date_col = 'Date (GMT+1)'  # Fallback to original column name
     
     df['Date'] = pd.to_datetime(
-        df[date_col].str.replace(' - ', ' ', regex=False),
+        df[date_col].str.replace(' \(GMT\+1\)', '', regex=True),
         errors='coerce',
-        format="%b %d, %Y %I:%M %p"  # Matches 'Jun 12, 2025 - 8:40 PM' after replace
+        format="%B %d, %Y %I:%M %p"  # Matches 'June 4, 2025 9:41 PM' after removing timezone
     )
     df = df.sort_values('Date')
     df['P/L'] = df['P/L'].replace({r'\$':'', ',':''}, regex=True).astype(float)
@@ -129,7 +130,13 @@ def show_analysis_page():
 
     # Calculate average trades per day
     trades_per_day = df.groupby(df['Date'].dt.date).size()
-    avg_trades_per_day = trades_per_day.mean() if not trades_per_day.empty else 0
+    avg_trades_per_day = trades_per_day.mean() if len(trades_per_day) > 0 else 0
+    
+    # Fallback calculation if the above doesn't work
+    if avg_trades_per_day == 0 or pd.isna(avg_trades_per_day):
+        # Calculate total trades divided by number of unique trading days
+        unique_days = df['Date'].dt.date.nunique()
+        avg_trades_per_day = len(df) / unique_days if unique_days > 0 else 0
 
     # Custom CSS for stat blocks (no vw units, just for color/rounded look)
     st.markdown('''
@@ -143,6 +150,23 @@ def show_analysis_page():
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            font-size: 22px;
+            font-family: 'Segoe UI', sans-serif;
+            color: #b0b3c2;
+            font-weight: 500;
+            min-width: 180px;
+            width: 100%;
+            text-align: center;
+        }
+        .summary-block-winrate {
+            background: #23272e;
+            border-radius: 20px;
+            padding: 40px 40px 40px 40px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
             font-size: 22px;
             font-family: 'Segoe UI', sans-serif;
             color: #b0b3c2;
@@ -201,23 +225,6 @@ def show_analysis_page():
             width: 100%;
             text-align: center;
             display: block;
-        }
-        .summary-block-winrate {
-            background: #23272e;
-            border-radius: 20px;
-            padding: 40px 40px 40px 40px;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            font-size: 22px;
-            font-family: 'Segoe UI', sans-serif;
-            color: #b0b3c2;
-            font-weight: 500;
-            min-width: 180px;
-            width: 100%;
-            text-align: center;
         }
         .circle-percentage {
             width: 90px;
@@ -305,17 +312,22 @@ def show_analysis_page():
         ''', unsafe_allow_html=True)
 
     with col_avg_trades:
-        if avg_trades_per_day < 3:
-            avg_trades_color = '#3fffa8'  # green
-        elif 3.1 <= avg_trades_per_day <= 4:
-            avg_trades_color = '#90caf9'  # blue
-        elif avg_trades_per_day > 4.1:
-            avg_trades_color = '#ff4b5c'  # red
-        else:
+        # Debug: Check if avg_trades_per_day is valid
+        if pd.isna(avg_trades_per_day) or avg_trades_per_day == 0:
+            avg_trades_display = "0"
             avg_trades_color = '#b0b3c2'  # default/gray
-        
-        # Format to show decimal only when needed
-        avg_trades_display = f"{avg_trades_per_day:.0f}" if avg_trades_per_day.is_integer() else f"{avg_trades_per_day:.1f}"
+        else:
+            if avg_trades_per_day < 3:
+                avg_trades_color = '#3fffa8'  # green
+            elif 3.1 <= avg_trades_per_day <= 4:
+                avg_trades_color = '#90caf9'  # blue
+            elif avg_trades_per_day > 4.1:
+                avg_trades_color = '#ff4b5c'  # red
+            else:
+                avg_trades_color = '#b0b3c2'  # default/gray
+            
+            # Format to show decimal only when needed
+            avg_trades_display = f"{avg_trades_per_day:.0f}" if avg_trades_per_day.is_integer() else f"{avg_trades_per_day:.1f}"
         
         st.markdown(f'''
             <div class="summary-block-winrate" style="padding-bottom: 40px;">
@@ -440,6 +452,8 @@ def show_analysis_page():
 
     # --- P&L per Trade (Line Chart) ---
     st.subheader("P&L per Trade")
+    if 'DateShort' not in df.columns:
+        df['DateShort'] = df['Date'].dt.strftime('%B %d')
     fig_pnl = go.Figure()
     fig_pnl.add_trace(go.Scatter(
         x=list(range(1, len(df['P/L'])+1)),
@@ -447,7 +461,8 @@ def show_analysis_page():
         mode='lines',
         name='P&L per Trade',
         line=dict(color='white', width=2, shape='spline', smoothing=1.3),
-        hovertemplate='<b>Trade #%{x}</b><br>P&L: $%{y:,.0f}<extra></extra>'
+        customdata=np.stack([df['DateShort'], [i+1 for i in range(len(df))]], axis=-1),
+        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br>P&L: $%{y:,.0f}<extra></extra>'
     ))
     fig_pnl.add_shape(type="line", x0=1, x1=len(df['P/L']), y0=0, y1=0, line=dict(color="white", width=1.5, dash="dash"))
     fig_pnl.update_layout(
@@ -465,18 +480,24 @@ def show_analysis_page():
     fig_pnl.update_yaxes(tickprefix="$", separatethousands=True)
     st.plotly_chart(fig_pnl, use_container_width=True)
 
+    # Ensure data is sorted by date and all columns are present
+    df_sorted = df.sort_values('Date').reset_index(drop=True)
+    df_sorted['DateShort'] = df_sorted['Date'].dt.strftime('%B %d')
+    df_sorted['Drawdown %'] = (df_sorted['Drawdown'] / df_sorted['Running Max']) * 100
+
     # --- Interactive Equity Curve ---
     st.subheader("Equity Curve")
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=list(range(1, len(df['Equity'])+1)),
-        y=df['Equity'],
+        x=list(range(1, len(df_sorted)+1)),
+        y=df_sorted['Equity'],
         mode='lines',
         name='Equity Curve',
         line=dict(color='#90EE90', width=2),  # light green line
         fill='tonexty',
         fillcolor='rgba(144, 238, 144, 0.2)',  # more transparent light green fill
-        hovertemplate='<b>Trade #%{x}</b><br>Equity: $%{y:,.0f}<extra></extra>'
+        customdata=np.stack([df_sorted['DateShort'], df_sorted['Trade #']], axis=-1),
+        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br><b>Equity:</b> $%{y:,.0f}<extra></extra>'
     ))
     fig.update_layout(
         xaxis_title='',  # Remove Trade # label
@@ -495,27 +516,29 @@ def show_analysis_page():
 
     # --- Cumulative Win/Loss Count ---
     st.subheader("Cumulative W&L")
-
+    trade_numbers = list(range(1, len(df_sorted) + 1))
     # Calculate cumulative wins and losses
-    df['Cumulative Wins'] = (df['W/L'] == 'W').cumsum()
-    df['Cumulative Losses'] = (df['W/L'] == 'L').cumsum()
-
+    df_sorted['Cumulative Wins'] = (df_sorted['W/L'] == 'W').cumsum()
+    df_sorted['Cumulative Losses'] = (df_sorted['W/L'] == 'L').cumsum()
+    customdata = np.stack([df_sorted['DateShort'], df_sorted['Trade #']], axis=-1)
     fig_cum = go.Figure()
     fig_cum.add_trace(go.Scatter(
-        x=df['Date'],
-        y=df['Cumulative Wins'],
+        x=trade_numbers,
+        y=df_sorted['Cumulative Wins'],
         mode='lines',
         name='Cumulative Wins',
         line=dict(color='#3fffa8', width=2, shape='spline', smoothing=1.3),
-        hovertemplate='<extra></extra>'
+        customdata=customdata,
+        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br><b>Wins:</b> %{y}<extra></extra>'
     ))
     fig_cum.add_trace(go.Scatter(
-        x=df['Date'],
-        y=df['Cumulative Losses'],
+        x=trade_numbers,
+        y=df_sorted['Cumulative Losses'],
         mode='lines',
         name='Cumulative Losses',
         line=dict(color='#ff4b5c', width=2, shape='spline', smoothing=1.3),
-        hovertemplate='<extra></extra>'
+        customdata=customdata,
+        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br><b>Losses:</b> %{y}<extra></extra>'
     ))
     fig_cum.update_layout(
         xaxis_title='',
@@ -528,45 +551,37 @@ def show_analysis_page():
         height=500,
         showlegend=False,  # Hide the legend
         hoverlabel=dict(font_size=15),
-        xaxis=dict(
-            tickformat='%b %d'  # Show only month and day
-        )
     )
     st.plotly_chart(fig_cum, use_container_width=True)
 
     # --- Drawdown Analysis ---
     st.subheader("Drawdown")
-
-    # Calculate drawdown percentage (we already have the basic drawdown calculated)
-    df['Drawdown %'] = (df['Drawdown'] / df['Running Max']) * 100
-
     # Calculate additional drawdown statistics
-    max_drawdown_pct = df['Drawdown %'].min()
-    avg_drawdown = df['Drawdown'].mean()
-    avg_drawdown_pct = df['Drawdown %'].mean()
-
+    max_drawdown_pct = df_sorted['Drawdown %'].min()
+    avg_drawdown = df_sorted['Drawdown'].mean()
+    avg_drawdown_pct = df_sorted['Drawdown %'].mean()
     # Calculate recovery periods (when drawdown goes from negative to 0)
     recovery_periods = []
     current_drawdown_start = None
-    for i, drawdown in enumerate(df['Drawdown']):
+    for i, drawdown in enumerate(df_sorted['Drawdown']):
         if drawdown < 0 and current_drawdown_start is None:
             current_drawdown_start = i
         elif drawdown >= 0 and current_drawdown_start is not None:
             recovery_periods.append(i - current_drawdown_start)
             current_drawdown_start = None
-
     avg_recovery_period = sum(recovery_periods) / len(recovery_periods) if recovery_periods else 0
-
     # Create drawdown line chart
     fig_drawdown = go.Figure()
     fig_drawdown.add_trace(go.Scatter(
-        x=list(range(1, len(df)+1)),
-        y=df['Drawdown %'],
+        x=list(range(1, len(df_sorted)+1)),
+        y=df_sorted['Drawdown %'],
         mode='lines',
         name='Drawdown %',
         line=dict(color='#ff4b5c', width=2, shape='spline', smoothing=1.3),
         fill='tonexty',
-        fillcolor='rgba(255, 75, 92, 0.3)'
+        fillcolor='rgba(255, 75, 92, 0.3)',
+        customdata=np.stack([df_sorted['DateShort'], [i+1 for i in range(len(df_sorted))]], axis=-1),
+        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br>Drawdown: %{y:.1f}%<extra></extra>'
     ))
     fig_drawdown.update_layout(
         xaxis_title='',  # Remove Trade # label

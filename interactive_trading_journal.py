@@ -84,10 +84,10 @@ def show_analysis_page():
     df = st.session_state.df
     
     # Streamlit-native header with logo and title
-    header_col1, header_col2, header_col3, header_col4 = st.columns([1, 4, 1, 1])
+    header_col1, header_col2, header_col3, header_col4 = st.columns([1, 6, 1, 0.5])
     with header_col1:
         st.image("tradalytics_logo.png")
-    # Remove the upload button from header_col3 and move it to header_col4, rename to 'Upload', and remove any icon
+    # Position upload button at the far right edge
     with header_col4:
         if st.button("Upload"):
             st.session_state.data_uploaded = False
@@ -265,12 +265,15 @@ def show_analysis_page():
     highest_win = df.loc[df['W/L'] == 'W', 'P/L'].max() if wins > 0 else 0
     highest_loss = df.loc[df['W/L'] == 'L', 'P/L'].min() if losses > 0 else 0
 
-    # Calculate best market and best setup for summary blocks
+    # Calculate best market for summary blocks
     best_market_row = df.groupby('Market')["P/L"].sum().sort_values(ascending=False).head(1)
     best_market = best_market_row.index[0] if not best_market_row.empty else "-"
-    best_setup_row = df.groupby('Setup')["P/L"].sum().sort_values(ascending=False).head(1)
-    best_setup = best_setup_row.index[0] if not best_setup_row.empty else "-"
     expectancy = (win_pct * avg_win + loss_pct * avg_loss) / 100 if total_trades > 0 else 0
+    
+    # Calculate drawdown for summary blocks
+    df['Running Max'] = df['Equity'].expanding().max()
+    df['Drawdown'] = df['Equity'] - df['Running Max']
+    max_drawdown = df['Drawdown'].min()
 
     # Use Streamlit columns for layout - First Row
     col_left, col_winrate, col_pnl, col_avg_trades, col_right = st.columns([2,1.2,1.2,1.2,2])
@@ -351,8 +354,8 @@ def show_analysis_page():
     with col_avg_trades2:
         st.markdown(f'''
             <div class="summary-block-winrate">
-                <span class="winrate-label">BEST SETUP</span>
-                <span class="winrate-value" style="color: #90caf9;">{best_setup}</span>
+                <span class="winrate-label">DRAWDOWN</span>
+                <span class="winrate-value" style="color: #ff4b5c;">${max_drawdown:,.0f}</span>
             </div>
         ''', unsafe_allow_html=True)
 
@@ -533,13 +536,10 @@ def show_analysis_page():
     # --- Drawdown Analysis ---
     st.subheader("Drawdown")
 
-    # Calculate running maximum and drawdown
-    df['Running Max'] = df['Equity'].expanding().max()
-    df['Drawdown'] = df['Equity'] - df['Running Max']
+    # Calculate drawdown percentage (we already have the basic drawdown calculated)
     df['Drawdown %'] = (df['Drawdown'] / df['Running Max']) * 100
 
-    # Calculate drawdown statistics
-    max_drawdown = df['Drawdown'].min()
+    # Calculate additional drawdown statistics
     max_drawdown_pct = df['Drawdown %'].min()
     avg_drawdown = df['Drawdown'].mean()
     avg_drawdown_pct = df['Drawdown %'].mean()

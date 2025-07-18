@@ -283,6 +283,20 @@ def show_analysis_page():
     df['Drawdown'] = df['Equity'] - df['Running Max']
     max_drawdown = df['Drawdown'].min()
 
+    # Calculate recovery periods (when drawdown goes from negative to 0)
+    df_sorted = df.sort_values('Date').reset_index(drop=True)
+    df_sorted['DateShort'] = df_sorted['Date'].dt.strftime('%B %d')
+    df_sorted['Drawdown %'] = (df_sorted['Drawdown'] / df_sorted['Running Max']) * 100
+    recovery_periods = []
+    current_drawdown_start = None
+    for i, drawdown in enumerate(df_sorted['Drawdown']):
+        if drawdown < 0 and current_drawdown_start is None:
+            current_drawdown_start = i
+        elif drawdown >= 0 and current_drawdown_start is not None:
+            recovery_periods.append(i - current_drawdown_start)
+            current_drawdown_start = None
+    avg_recovery_period = sum(recovery_periods) / len(recovery_periods) if recovery_periods else 0
+
     # Use Streamlit columns for layout - First Row
     col_left, col_winrate, col_pnl, col_avg_trades, col_right = st.columns([2,1.2,1.2,1.2,2])
 
@@ -348,14 +362,6 @@ def show_analysis_page():
         st.markdown(f'''<div class="summary-block" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;"><span class="summary-label">WIN STREAK</span> <span class="summary-value-win">{highest_win_streak}</span></div>''', unsafe_allow_html=True)
 
     with col_winrate2:
-        st.markdown(f'''
-            <div class="summary-block-winrate">
-                <span class="winrate-label">BEST MARKET</span>
-                <span class="winrate-value" style="color: #3fffa8;">{best_market}</span>
-            </div>
-        ''', unsafe_allow_html=True)
-
-    with col_pnl2:
         expectancy_color = '#3fffa8' if expectancy >= 50 else '#ff4b5c'  # green if >= $50, red if < $50
         st.markdown(f'''
             <div class="summary-block-winrate">
@@ -364,11 +370,19 @@ def show_analysis_page():
             </div>
         ''', unsafe_allow_html=True)
 
-    with col_avg_trades2:
+    with col_pnl2:
         st.markdown(f'''
             <div class="summary-block-winrate">
                 <span class="winrate-label">DRAWDOWN</span>
                 <span class="winrate-value" style="color: #ff4b5c;">${max_drawdown:,.0f}</span>
+            </div>
+        ''', unsafe_allow_html=True)
+
+    with col_avg_trades2:
+        st.markdown(f'''
+            <div class="summary-block-winrate">
+                <span class="winrate-label">AVG RECOVERY</span>
+                <span class="winrate-value" style="color: #3fffa8;">{avg_recovery_period:.0f} trades</span>
             </div>
         ''', unsafe_allow_html=True)
 
@@ -560,16 +574,6 @@ def show_analysis_page():
     max_drawdown_pct = df_sorted['Drawdown %'].min()
     avg_drawdown = df_sorted['Drawdown'].mean()
     avg_drawdown_pct = df_sorted['Drawdown %'].mean()
-    # Calculate recovery periods (when drawdown goes from negative to 0)
-    recovery_periods = []
-    current_drawdown_start = None
-    for i, drawdown in enumerate(df_sorted['Drawdown']):
-        if drawdown < 0 and current_drawdown_start is None:
-            current_drawdown_start = i
-        elif drawdown >= 0 and current_drawdown_start is not None:
-            recovery_periods.append(i - current_drawdown_start)
-            current_drawdown_start = None
-    avg_recovery_period = sum(recovery_periods) / len(recovery_periods) if recovery_periods else 0
     # Create drawdown line chart
     fig_drawdown = go.Figure()
     fig_drawdown.add_trace(go.Scatter(
@@ -580,8 +584,8 @@ def show_analysis_page():
         line=dict(color='#ff4b5c', width=2, shape='spline', smoothing=1.3),
         fill='tonexty',
         fillcolor='rgba(255, 75, 92, 0.3)',
-        customdata=np.stack([df_sorted['DateShort'], [i+1 for i in range(len(df_sorted))]], axis=-1),
-        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br>Drawdown: %{y:.1f}%<extra></extra>'
+        customdata=np.stack([df_sorted['DateShort'], [i+1 for i in range(len(df_sorted))], df_sorted['Drawdown']], axis=-1),
+        hovertemplate='<b>Date:</b> %{customdata[0]}<br><b>Trade # %{customdata[1]}</b><br>Drawdown: $%{customdata[2]:,.0f}<extra></extra>'
     ))
     fig_drawdown.update_layout(
         xaxis_title='',  # Remove Trade # label

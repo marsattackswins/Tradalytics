@@ -1,25 +1,22 @@
-# Trading Journal Analytics
+# Tradalytics: Interactive Trading Journal Analytics
 
-A powerful Streamlit web application for interactive analysis and visualization of trading journal data. Gain deep insights into your trading performance with comprehensive analytics, equity curves, P&L breakdowns, and win/loss statistics.
+A powerful Streamlit web app for interactive analysis and visualization of your trading journal. Gain deep insights into your trading performance with comprehensive analytics, equity curves, P&L breakdowns, and win/loss statistics.
 
 ## 🚀 Features
 
-### Interactive Dashboards
-- **W&L by Market:** Stacked bar chart showing wins and losses for each trading market
+- **Wins & Losses by Market:** Stacked bar chart showing wins and losses for each trading market
 - **P&L by Market:** Color-coded bar chart displaying profit/loss per market (positive in light blue, negative in golden yellow)
 - **P&L per Trade:** Line chart tracking individual trade performance over time
-- **Equity Curve:** Interactive chart monitoring account equity growth from a $2,000 starting balance
-
-### Key Analytics
+- **Equity Curve:** Interactive chart monitoring account equity growth from a customizable starting balance
 - Real-time data processing and visualization
 - Custom hover tooltips with formatted currency values
 - Dark theme optimized for trading environments
-- Responsive design that adapts to different screen sizes
+- Responsive design for all screen sizes
 - Optional raw data table for detailed inspection
 
 ## 📊 Data Requirements
 
-Your CSV file should contain the following columns:
+Your CSV file should include the following columns:
 - `Date`: Trade date and time
 - `Market`: Trading instrument/market name
 - `P/L`: Profit/Loss amount (with $ symbol and commas)
@@ -29,24 +26,22 @@ Your CSV file should contain the following columns:
 
 ### Prerequisites
 - Python 3.7 or higher
-- pip package manager
+- pip (Python package manager)
 
 ### Installation
 
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/marsattackswins/Demo.git
-   cd Demo
+   cd Tradalytics
    ```
-
-2. **Install required dependencies:**
+2. **Install dependencies:**
    ```bash
    pip install streamlit pandas plotly
    ```
-
 3. **Prepare your data:**
-   - Place your trading journal CSV file in the project directory
-   - Update the filename in `interactive_trading_journal.py` if needed (currently set to `'Free Trading Journal DB 20a776d92d078137a4ccfeaa4b1081bd_all.csv'`)
+   - Place your trading journal CSV file in the project directory.
+   - Update the filename in `interactive_trading_journal.py` if needed (default: `'Free Trading Journal DB 20a776d92d078137a4ccfeaa4b1081bd_all.csv'`).
 
 ## 🎯 Usage
 
@@ -54,56 +49,46 @@ Your CSV file should contain the following columns:
    ```bash
    streamlit run interactive_trading_journal.py
    ```
-
-2. **Access the dashboard:**
-   - Open your web browser
-   - Navigate to the URL provided by Streamlit (typically `http://localhost:8501`)
-
-3. **Interact with the charts:**
-   - Hover over data points for detailed information
-   - Use the interactive features to explore your trading data
-   - Toggle the "Show raw data table" checkbox to view underlying data
+2. **Open the dashboard:**
+   - In your browser, go to the URL provided by Streamlit (usually `http://localhost:8501`).
+3. **Explore your data:**
+   - Hover over charts for details
+   - Use interactive features to analyze your trading performance
+   - Toggle "Show raw data table" to view the underlying data
 
 ## 📁 File Structure
 
 ```
-Demo/
+Tradalytics/
 ├── interactive_trading_journal.py    # Main Streamlit application
-├── analyze_trading_journal.py        # Additional analysis script
-├── Free Trading Journal DB *.csv     # Trading journal data
-├── README.md                         # This file
+├── README.md                         # Project documentation
+├── requirements.txt                  # Python dependencies
+├── tradalytics_logo.png              # Project logo
+├── favicon.png                       # Favicon for the app
+├── Free Trading Journal DB *.csv     # Your trading journal data
 ```
 
 ## 🎨 Customization
 
-### Chart Colors
-- **Positive P&L:** Light blue (`#90caf9`)
-- **Negative P&L:** Golden yellow (`#F4BB44`)
-- **Wins:** Light blue (`#90caf9`)
-- **Losses:** Golden yellow (`#F4BB44`)
-
-### Starting Balance
-The equity curve calculation uses a $2,000 starting balance. You can modify this in the code:
-```python
-initial_equity = 2000  # Change this value as needed
-```
+- **Chart Colors:**
+  - Positive P&L / Wins: Light blue (`#90caf9`)
+  - Negative P&L / Losses: Golden yellow (`#F4BB44`)
+- **Starting Balance:**
+  - The equity curve uses a $2,000 starting balance by default. Change this in the code:
+    ```python
+    initial_equity = 2000  # Edit as needed
+    ```
 
 ## 🔧 Technical Details
 
-### Dependencies
 - **Streamlit:** Web application framework
 - **Pandas:** Data manipulation and analysis
 - **Plotly:** Interactive charting library
-
-### Data Processing
-- Automatic date parsing and sorting
-- Currency formatting and cleaning
-- Cumulative equity calculation
-- Market-specific aggregations
+- Automatic date parsing, currency formatting, and cumulative equity calculation
+- Market-specific aggregations for detailed insights
 
 ## 📈 Sample Output
 
-The application generates several key visualizations:
 - Stacked bar charts for win/loss analysis
 - Color-coded P&L charts by market
 - Time-series equity curves
@@ -111,7 +96,7 @@ The application generates several key visualizations:
 
 ## 🤝 Contributing
 
-Feel free to extend this application with additional features:
+Contributions are welcome! Ideas for new features include:
 - Risk metrics and drawdown analysis
 - Portfolio allocation charts
 - Trading session analysis
@@ -119,14 +104,14 @@ Feel free to extend this application with additional features:
 
 ## 📝 License
 
-This project is open source and available under the MIT License.
+This project is open source under the MIT License.
 
 ## 🙏 Credits
 
 Built with:
-- [Streamlit](https://streamlit.io/) - Web app framework
-- [Plotly](https://plotly.com/python/) - Interactive charts
-- [Pandas](https://pandas.pydata.org/) - Data analysis
+- [Streamlit](https://streamlit.io/) – Web app framework
+- [Plotly](https://plotly.com/python/) – Interactive charts
+- [Pandas](https://pandas.pydata.org/) – Data analysis
 
 ---
 

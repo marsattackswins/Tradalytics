@@ -128,6 +128,16 @@ def show_analysis_page():
     avg_win = df.loc[df['W/L'] == 'W', 'P/L'].mean() if wins > 0 else 0
     avg_loss = df.loc[df['W/L'] == 'L', 'P/L'].mean() if losses > 0 else 0
 
+    # Calculate profit factor for summary block
+    gross_profit = df.loc[df['P/L'] > 0, 'P/L'].sum()
+    gross_loss = abs(df.loc[df['P/L'] < 0, 'P/L'].sum())
+    profit_factor = gross_profit / gross_loss if gross_loss > 0 else 0
+
+    # Calculate risk-reward for summary block
+    avg_win_abs = abs(avg_win) if avg_win else 0
+    avg_loss_abs = abs(avg_loss) if avg_loss else 0
+    risk_reward_ratio = avg_win_abs / avg_loss_abs if avg_loss_abs > 0 else 0
+
     # Calculate average trades per day
     trades_per_day = df.groupby(df['Date'].dt.date).size()
     avg_trades_per_day = trades_per_day.mean() if len(trades_per_day) > 0 else 0
@@ -161,7 +171,7 @@ def show_analysis_page():
         .summary-block-winrate {
             background: #23272e;
             border-radius: 20px;
-            padding: 40px 40px 40px 40px;
+            padding: 40px 40px 36px 40px;
             margin-bottom: 10px;
             display: flex;
             flex-direction: column;
@@ -371,18 +381,19 @@ def show_analysis_page():
         ''', unsafe_allow_html=True)
 
     with col_pnl2:
+        rrr_color = '#3fffa8' if risk_reward_ratio >= 1.5 else '#ff4b5c'
         st.markdown(f'''
             <div class="summary-block-winrate">
-                <span class="winrate-label">DRAWDOWN</span>
-                <span class="winrate-value" style="color: #ff4b5c;">${max_drawdown:,.0f}</span>
+                <span class="winrate-label">RRR</span>
+                <span class="winrate-value" style="color: {rrr_color};">{risk_reward_ratio:.2f}</span>
             </div>
         ''', unsafe_allow_html=True)
 
     with col_avg_trades2:
         st.markdown(f'''
             <div class="summary-block-winrate">
-                <span class="winrate-label">AVG RECOVERY</span>
-                <span class="winrate-value" style="color: #3fffa8;">{avg_recovery_period:.0f} trades</span>
+                <span class="winrate-label">PROFIT FACTOR</span>
+                <span class="winrate-value" style="color: #3fffa8;">{profit_factor:.2f}</span>
             </div>
         ''', unsafe_allow_html=True)
 
@@ -463,6 +474,32 @@ def show_analysis_page():
     fig_market_bar.update_xaxes(showticklabels=True, tickfont=dict(size=14))  # show labels and make them bigger
     fig_market_bar.update_yaxes(tickprefix="$", separatethousands=True, zeroline=True, tickformat=",.0f")
     st.plotly_chart(fig_market_bar, use_container_width=True)
+
+    # --- P&L by Setup (Bar Chart) ---
+    if 'Setup' in df.columns:
+        st.subheader("P&L by Setup")
+        setup_pnl = df.groupby('Setup')['P/L'].sum().sort_values(ascending=False)
+        # Filter out setups with P&L between -400 and 400 (inclusive)
+        setup_pnl = setup_pnl[(setup_pnl < -400) | (setup_pnl > 400)]
+        # Set bar colors: green for positive, red for negative
+        bar_colors_setup = ['#3CB371' if v > 0 else '#ff4b5c' for v in setup_pnl.values]
+        fig_setup = go.Figure([go.Bar(x=setup_pnl.index, y=setup_pnl.values, marker_color=bar_colors_setup)])
+        fig_setup.update_layout(
+            xaxis_title='',
+            yaxis_title='',
+            template='plotly_dark',
+            plot_bgcolor='#181818',
+            paper_bgcolor='#181818',
+            font=dict(color='#e0e0e0'),
+            margin=dict(l=40, r=40, t=60, b=40),
+            height=500,
+            showlegend=False,
+            bargap=0.6,
+            hoverlabel=dict(font_size=15),
+        )
+        fig_setup.update_xaxes(showticklabels=True, tickfont=dict(size=14))
+        fig_setup.update_yaxes(tickprefix="$", separatethousands=True, zeroline=True, tickformat=",.0f")
+        st.plotly_chart(fig_setup, use_container_width=True)
 
     # --- P&L per Trade (Line Chart) ---
     st.subheader("P&L per Trade")
